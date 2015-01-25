@@ -30,7 +30,7 @@ void ReadTemp::startConversion()
 }
 
 bool ReadTemp::HasData() {
-   return (NT > 0);
+   return (NT > 5);
 }
 
 float ReadTemp::readOneTemp(byte Ndx)

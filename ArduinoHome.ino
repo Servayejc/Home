@@ -29,10 +29,7 @@ void setup() {
 
 // Main program.
 void loop() {
-	//set the watchdog to 8 second
-	wdt_enable(WDTO_8S);
-	Serial.println("Watchdog enabled.");
-	
+
     // Initialize the tasks
 	readT.init();
 	readT.getAddress();
@@ -49,6 +46,10 @@ void loop() {
 	power.setRunnable();
 	sendData.setRunnable();
 	sendAlarm.setRunnable();
+
+	//set the watchdog to 8 second
+	wdt_enable(WDTO_8S);
+	Serial.println("Watchdog enabled.");
 
 	// Initialize the scheduler.
 	Task *tasks[] = { &clock, &sendData, &sendAlarm,  &readT, &power, &menu, };
