@@ -6,7 +6,7 @@
 #include "Clock.h"
 #include "Utils.h"
 #include "Globals.h"
-#include "jc.h"
+#include "Credentials.h"
 
 typedef unsigned long time_t;
 

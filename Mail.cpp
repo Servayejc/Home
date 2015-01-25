@@ -6,7 +6,7 @@
 #include "Mail.h"
 #include "Utils.h"
 #include "Globals.h"
-#include "jc.h"
+#include "Credentials.h"
 
 UIPClient      sendMailClient;
 

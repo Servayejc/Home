@@ -11,7 +11,7 @@
 #include "Power.h"
 #include "SendData.h"
 #include "Mail.h"
-#include "jc.h"
+#include "credentials.h"
 
 class Menu;
 class ReadTemp;
