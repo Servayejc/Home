@@ -1,0 +1,499 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectVersion>6.2</ProjectVersion>
+    <ToolchainName>com.Atmel.AVRGCC8.CPP</ToolchainName>
+    <ProjectGuid>{07b459b4-8d76-4638-bc6d-a459ba2d616b}</ProjectGuid>
+    <avrdevice>atmega1284p</avrdevice>
+    <avrdeviceseries>none</avrdeviceseries>
+    <OutputType>Executable</OutputType>
+    <Language>CPP</Language>
+    <OutputFileName>$(MSBuildProjectName)</OutputFileName>
+    <OutputFileExtension>.elf</OutputFileExtension>
+    <OutputDirectory>$(MSBuildProjectDirectory)\$(Configuration)</OutputDirectory>
+    <AssemblyName>ArduinoHome</AssemblyName>
+    <Name>ArduinoHome</Name>
+    <RootNamespace>ArduinoHome</RootNamespace>
+    <ToolchainFlavour>Native</ToolchainFlavour>
+    <KeepTimersRunning>true</KeepTimersRunning>
+    <OverrideVtor>false</OverrideVtor>
+    <OverrideVtorValue>
+    </OverrideVtorValue>
+    <eraseonlaunchrule>0</eraseonlaunchrule>
+    <ProgFlashFromRam>true</ProgFlashFromRam>
+    <RamSnippetAddress>0x20000000</RamSnippetAddress>
+    <CacheFlash>true</CacheFlash>
+    <UncachedRange />
+    <BootSegment>0</BootSegment>
+    <AsfFrameworkConfig>
+      <framework-data>
+        <options />
+        <configurations />
+        <files />
+        <documentation help="" />
+        <offline-documentation help="" />
+        <dependencies>
+          <content-extension eid="atmel.asf" uuidref="Atmel.ASF" version="3.6.0" />
+        </dependencies>
+      </framework-data>
+    </AsfFrameworkConfig>
+    <preserveEEPROM>true</preserveEEPROM>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <ToolchainSettings>
+      <AvrGccCpp>
+  <avrgcc.common.outputfiles.hex>True</avrgcc.common.outputfiles.hex>
+  <avrgcc.common.outputfiles.lss>True</avrgcc.common.outputfiles.lss>
+  <avrgcc.common.outputfiles.eep>True</avrgcc.common.outputfiles.eep>
+  <avrgcc.common.outputfiles.srec>True</avrgcc.common.outputfiles.srec>
+  <avrgcc.common.outputfiles.usersignatures>False</avrgcc.common.outputfiles.usersignatures>
+  <avrgcc.compiler.general.ChangeDefaultCharTypeUnsigned>True</avrgcc.compiler.general.ChangeDefaultCharTypeUnsigned>
+  <avrgcc.compiler.general.ChangeDefaultBitFieldUnsigned>True</avrgcc.compiler.general.ChangeDefaultBitFieldUnsigned>
+  <avrgcc.compiler.symbols.DefSymbols>
+    <ListValues>
+      <Value>__AVR_ATmega1284p__</Value>
+      <Value>__AVR_ATmega1284P__</Value>
+      <Value>ARDUINO=105</Value>
+      <Value>ARDUINO_MAIN</Value>
+      <Value>F_CPU=16000000L</Value>
+      <Value>__AVR__</Value>
+    </ListValues>
+  </avrgcc.compiler.symbols.DefSymbols>
+  <avrgcc.compiler.directories.IncludePaths>
+    <ListValues>
+      <Value></Value>
+      <Value>c:/program files (x86)/arduino/hardware/tools/avr/lib/gcc/avr/4.3.2/include/</Value>
+      <Value>c:/program files (x86)/arduino/hardware/tools/avr/avr/</Value>
+      <Value>c:/program files (x86)/arduino/hardware/tools/avr/avr/include/avr/</Value>
+      <Value>c:/program files (x86)/arduino/hardware/tools/avr/avr/include/</Value>
+      <Value>C:/Users/Core2Quad/Documents/Arduino/libraries</Value>
+      <Value>C:/Program Files (x86)/Visual Micro/Visual Micro for Arduino/Micro Platforms/default/debuggers</Value>
+      <Value>c:/Program Files (x86)/Arduino/hardware/tempuino/libraries</Value>
+      <Value>c:/Program Files (x86)/Arduino/libraries</Value>
+      <Value>c:/Program Files (x86)/Arduino/libraries/uipmaster/utility</Value>
+      <Value>c:/Program Files (x86)/Arduino/libraries/uipmaster</Value>
+      <Value>c:/Program Files (x86)/Arduino/libraries/PID_v1/utility</Value>
+      <Value>c:/Program Files (x86)/Arduino/libraries/PID_v1</Value>
+      <Value>c:/Program Files (x86)/Arduino/libraries/rtclib/utility</Value>
+      <Value>c:/Program Files (x86)/Arduino/libraries/rtclib</Value>
+      <Value>c:/Program Files (x86)/Arduino/libraries/MemoryFree/utility</Value>
+      <Value>c:/Program Files (x86)/Arduino/libraries/MemoryFree</Value>
+      <Value>c:/Program Files (x86)/Arduino/libraries/SPI/utility</Value>
+      <Value>c:/Program Files (x86)/Arduino/libraries/SPI</Value>
+      <Value>c:/Program Files (x86)/Arduino/libraries/Temboo/utility</Value>
+      <Value>c:/Program Files (x86)/Arduino/libraries/Temboo</Value>
+      <Value>c:/Program Files (x86)/Arduino/libraries/LiquidTWI2/utility</Value>
+      <Value>c:/Program Files (x86)/Arduino/libraries/LiquidTWI2</Value>
+      <Value>c:/Program Files (x86)/Arduino/libraries/Wire/utility</Value>
+      <Value>c:/Program Files (x86)/Arduino/libraries/Wire</Value>
+      <Value>c:/Program Files (x86)/Arduino/libraries/OneWire/utility</Value>
+      <Value>c:/Program Files (x86)/Arduino/libraries/OneWire</Value>
+      <Value>c:/Program Files (x86)/Arduino/libraries/Task/utility</Value>
+      <Value>c:/Program Files (x86)/Arduino/libraries/Task</Value>
+      <Value>c:/Program Files (x86)/Arduino/hardware/tempuino/variants/standard</Value>
+      <Value>c:/Program Files (x86)/Arduino/hardware/tempuino/cores/standard</Value>
+    </ListValues>
+  </avrgcc.compiler.directories.IncludePaths>
+  <avrgcc.compiler.optimization.level>Optimize (-O1)</avrgcc.compiler.optimization.level>
+  <avrgcc.compiler.optimization.PackStructureMembers>True</avrgcc.compiler.optimization.PackStructureMembers>
+  <avrgcc.compiler.optimization.AllocateBytesNeededForEnum>True</avrgcc.compiler.optimization.AllocateBytesNeededForEnum>
+  <avrgcc.compiler.optimization.DebugLevel>Default (-g2)</avrgcc.compiler.optimization.DebugLevel>
+  <avrgcc.compiler.warnings.AllWarnings>True</avrgcc.compiler.warnings.AllWarnings>
+  <avrgcccpp.compiler.general.ChangeDefaultCharTypeUnsigned>True</avrgcccpp.compiler.general.ChangeDefaultCharTypeUnsigned>
+  <avrgcccpp.compiler.general.ChangeDefaultBitFieldUnsigned>True</avrgcccpp.compiler.general.ChangeDefaultBitFieldUnsigned>
+  <avrgcccpp.compiler.symbols.DefSymbols>
+    <ListValues>
+      <Value>__AVR_ATmega1284p__</Value>
+      <Value>__AVR_ATmega1284P__</Value>
+      <Value>ARDUINO=105</Value>
+      <Value>ARDUINO_MAIN</Value>
+      <Value>F_CPU=16000000L</Value>
+      <Value>__AVR__</Value>
+    </ListValues>
+  </avrgcccpp.compiler.symbols.DefSymbols>
+  <avrgcccpp.compiler.directories.IncludePaths>
+    <ListValues>
+      <Value></Value>
+      <Value>c:/program files (x86)/arduino/hardware/tools/avr/lib/gcc/avr/4.3.2/include/</Value>
+      <Value>c:/program files (x86)/arduino/hardware/tools/avr/avr/</Value>
+      <Value>c:/program files (x86)/arduino/hardware/tools/avr/avr/include/avr/</Value>
+      <Value>c:/program files (x86)/arduino/hardware/tools/avr/avr/include/</Value>
+      <Value>C:/Users/Core2Quad/Documents/Arduino/libraries</Value>
+      <Value>C:/Program Files (x86)/Visual Micro/Visual Micro for Arduino/Micro Platforms/default/debuggers</Value>
+      <Value>c:/Program Files (x86)/Arduino/hardware/tempuino/libraries</Value>
+      <Value>c:/Program Files (x86)/Arduino/libraries</Value>
+      <Value>c:/Program Files (x86)/Arduino/libraries/uipmaster/utility</Value>
+      <Value>c:/Program Files (x86)/Arduino/libraries/uipmaster</Value>
+      <Value>c:/Program Files (x86)/Arduino/libraries/PID_v1/utility</Value>
+      <Value>c:/Program Files (x86)/Arduino/libraries/PID_v1</Value>
+      <Value>c:/Program Files (x86)/Arduino/libraries/rtclib/utility</Value>
+      <Value>c:/Program Files (x86)/Arduino/libraries/rtclib</Value>
+      <Value>c:/Program Files (x86)/Arduino/libraries/MemoryFree/utility</Value>
+      <Value>c:/Program Files (x86)/Arduino/libraries/MemoryFree</Value>
+      <Value>c:/Program Files (x86)/Arduino/libraries/SPI/utility</Value>
+      <Value>c:/Program Files (x86)/Arduino/libraries/SPI</Value>
+      <Value>c:/Program Files (x86)/Arduino/libraries/Temboo/utility</Value>
+      <Value>c:/Program Files (x86)/Arduino/libraries/Temboo</Value>
+      <Value>c:/Program Files (x86)/Arduino/libraries/LiquidTWI2/utility</Value>
+      <Value>c:/Program Files (x86)/Arduino/libraries/LiquidTWI2</Value>
+      <Value>c:/Program Files (x86)/Arduino/libraries/Wire/utility</Value>
+      <Value>c:/Program Files (x86)/Arduino/libraries/Wire</Value>
+      <Value>c:/Program Files (x86)/Arduino/libraries/OneWire/utility</Value>
+      <Value>c:/Program Files (x86)/Arduino/libraries/OneWire</Value>
+      <Value>c:/Program Files (x86)/Arduino/libraries/Task/utility</Value>
+      <Value>c:/Program Files (x86)/Arduino/libraries/Task</Value>
+      <Value>c:/Program Files (x86)/Arduino/hardware/tempuino/variants/standard</Value>
+      <Value>c:/Program Files (x86)/Arduino/hardware/tempuino/cores/standard</Value>
+    </ListValues>
+  </avrgcccpp.compiler.directories.IncludePaths>
+  <avrgcccpp.compiler.optimization.level>Optimize (-O1)</avrgcccpp.compiler.optimization.level>
+  <avrgcccpp.compiler.optimization.PackStructureMembers>True</avrgcccpp.compiler.optimization.PackStructureMembers>
+  <avrgcccpp.compiler.optimization.AllocateBytesNeededForEnum>True</avrgcccpp.compiler.optimization.AllocateBytesNeededForEnum>
+  <avrgcccpp.compiler.optimization.DebugLevel>Default (-g2)</avrgcccpp.compiler.optimization.DebugLevel>
+  <avrgcccpp.compiler.warnings.AllWarnings>True</avrgcccpp.compiler.warnings.AllWarnings>
+  <avrgcccpp.linker.libraries.LibrarySearchPaths>
+    <ListValues>
+      <Value>C:\Program Files\Arduino\libraries\PID</Value>
+    </ListValues>
+  </avrgcccpp.linker.libraries.LibrarySearchPaths>
+  <avrgcccpp.assembler.debugging.DebugLevel>Default (-Wa,-g)</avrgcccpp.assembler.debugging.DebugLevel>
+</AvrGccCpp>
+    </ToolchainSettings>
+    <VMSETTING_IncludePaths>c:/program files/arduino/hardware/arduino/cores/arduino;c:/program files/arduino/hardware/arduino/variants/standard;c:/program files/arduino/libraries/Task;c:/program files/arduino/libraries/Task/utility;e:/Documents and Settings/Jean-Claude/My Documents/Arduino/libraries/OneWire;e:/Documents and Settings/Jean-Claude/My Documents/Arduino/libraries/OneWire/utility;c:/program files/arduino/libraries/Wire;c:/program files/arduino/libraries/Wire/utility;c:/program files/arduino/libraries/LiquidTWI2;c:/program files/arduino/libraries/LiquidTWI2/utility;e:/Documents and Settings/Jean-Claude/My Documents/Arduino/libraries/Temboo;e:/Documents and Settings/Jean-Claude/My Documents/Arduino/libraries/Temboo/utility;c:/program files/arduino/libraries/SPI;c:/program files/arduino/libraries/SPI/utility;c:/program files/arduino/libraries/MemoryFree;c:/program files/arduino/libraries/MemoryFree/utility;c:/program files/arduino/libraries/rtclib;c:/program files/arduino/libraries/rtclib/utility;c:/program files/arduino/libraries/uipmaster;c:/program files/arduino/libraries/uipmaster/utility;c:/program files/arduino/libraries;c:/program files/arduino/hardware/arduino/libraries;C:/Program Files/Visual Micro/Visual Micro for Arduino/Micro Platforms/default/debuggers;e:/Documents and Settings/Jean-Claude/My Documents/Arduino/libraries;c:/program files/arduino/hardware/tools/avr/avr/include/;c:/program files/arduino/hardware/tools/avr/avr/include/avr/;c:/program files/arduino/hardware/tools/avr/avr/;c:/program files/arduino/hardware/tools/avr/lib/gcc/avr/4.3.2/include/;;c:/program files/arduino/hardware/tempuino/cores/standard;c:/program files/arduino/hardware/tempuino/variants/standard;c:/program files/arduino/hardware/tempuino/libraries;c:/program files/arduino/libraries/Time;c:/program files/arduino/libraries/Time/utility;c:/program files/arduino/libraries/Temboo;c:/program files/arduino/libraries/Temboo/utility;E:/Documents and Settings/Jean-Claude/My Documents/Arduino/libraries/OneWire;E:/Documents and Settings/Jean-Claude/My Documents/Arduino/libraries/OneWire/utility;E:/Documents and Settings/Jean-Claude/My Documents/Arduino/libraries/Temboo;E:/Documents and Settings/Jean-Claude/My Documents/Arduino/libraries/Temboo/utility;E:/Documents and Settings/Jean-Claude/My Documents/Arduino/libraries;E:/Documents and Settings/Jean-Claude/My Documents/Arduino/libraries/LiquidTWI2;E:/Documents and Settings/Jean-Claude/My Documents/Arduino/libraries/LiquidTWI2/utility;c:/program files/arduino/libraries/PID;c:/program files/arduino/libraries/PID/utility;c:/program files/arduino/libraries/Adafruit;c:/program files/arduino/libraries/Adafruit/utility;c:/Program Files (x86)/Arduino/hardware/tempuino/cores/standard;c:/Program Files (x86)/Arduino/hardware/tempuino/variants/standard;c:/Program Files (x86)/Arduino/libraries/Task;c:/Program Files (x86)/Arduino/libraries/Task/utility;c:/Program Files (x86)/Arduino/libraries/OneWire;c:/Program Files (x86)/Arduino/libraries/OneWire/utility;c:/Program Files (x86)/Arduino/libraries/Wire;c:/Program Files (x86)/Arduino/libraries/Wire/utility;c:/Program Files (x86)/Arduino/libraries/LiquidTWI2;c:/Program Files (x86)/Arduino/libraries/LiquidTWI2/utility;c:/Program Files (x86)/Arduino/libraries/SPI;c:/Program Files (x86)/Arduino/libraries/SPI/utility;c:/Program Files (x86)/Arduino/libraries/MemoryFree;c:/Program Files (x86)/Arduino/libraries/MemoryFree/utility;c:/Program Files (x86)/Arduino/libraries/rtclib;c:/Program Files (x86)/Arduino/libraries/rtclib/utility;c:/Program Files (x86)/Arduino/libraries/PID_v1;c:/Program Files (x86)/Arduino/libraries/PID_v1/utility;c:/Program Files (x86)/Arduino/libraries/uipmaster;c:/Program Files (x86)/Arduino/libraries/uipmaster/utility;c:/Program Files (x86)/Arduino/libraries;c:/Program Files (x86)/Arduino/hardware/tempuino/libraries;C:/Program Files (x86)/Visual Micro/Visual Micro for Arduino/Micro Platforms/default/debuggers;C:/Users/Core2Quad/Documents/Arduino/libraries;c:/program files (x86)/arduino/hardware/tools/avr/avr/include/;c:/program files (x86)/arduino/hardware/tools/avr/avr/include/avr/;c:/program files (x86)/arduino/hardware/tools/avr/avr/;c:/program files (x86)/arduino/hardware/tools/avr/lib/gcc/avr/4.3.2/include/;c:/Program Files (x86)/Arduino/libraries/Temboo;c:/Program Files (x86)/Arduino/libraries/Temboo/utility;</VMSETTING_IncludePaths>
+    <VisualMicroSettings>
+      <VisualMicroSettings>
+        <arduino.board.name>mighty_opt</arduino.board.name>
+        <arduino.board.desc>Tempuino 1284 16MHz using Optiboot</arduino.board.desc>
+        <arduino.board.property_bag>name=Tempuino 1284 16MHz using Optiboot
+upload.protocol=arduino
+upload.maximum_size=130048
+upload.speed=115200
+bootloader.low_fuses=0xff
+bootloader.high_fuses=0xde
+bootloader.extended_fuses=0xfd
+bootloader.path=optiboot
+bootloader.file=optiboot_atmega1284p.hex
+bootloader.unlock_bits=0x3F
+bootloader.lock_bits=0x0F
+build.mcu=atmega1284p
+build.f_cpu=16000000L
+build.core=standard
+build.variant=standard
+runtime.ide.path=c:\program files\arduino
+build.system.path=c:\program files\arduino\hardware\tempuino\system
+runtime.ide.version=105
+originalid=mighty_opt
+vm.platform.root.path=C:\Program Files\Visual Micro\Visual Micro for Arduino\Micro Platforms\arduino10x
+ide.hint=Arduino 0023 and 1.0.x Ide
+ide.location.key=Arduino
+ide.location.ide.winreg=Arduino 1.0.x Application
+ide.location.sketchbook.winreg=Arduino 1.0.x Sketchbook
+ide.location.sketchbook.preferences=sketchbook.path
+ide.location.sketchbook.default=%MYDOCUMENTS%\arduino
+ide.location.preferences=%VM_APPDATA_ROAMING%\arduino\preferences.txt
+ide.default.package=arduino
+ide.default.platform=avr
+ide.multiplatform=true
+ide.includes=arduino.h
+ide.platformswithoutpackage=true
+ide.includes.fallback=wprogram.h
+ide.extension=ino
+ide.extension.fallback=pde
+ide.versionLTEQ=149
+ide.exe=arduino.exe
+ide.hosts=atmel
+ide.url=http://arduino.cc/en/Main/Software
+vm.debug=true
+software=ARDUINO
+ide.appid=arduino10x
+location.sketchbook=e:\Documents and Settings\Jean-Claude\My Documents\Arduino\
+vm.core.include=arduino.h
+build.board=AVR_MIGHTY_OPT
+vm.boardsource.path=c:\program files\arduino\hardware\tempuino
+runtime.platform.path=c:\program files\arduino\hardware\tempuino
+vm.platformname.name=avr
+build.arch=AVR
+</arduino.board.property_bag>
+        <arduino.build.mcu>atmega1284p</arduino.build.mcu>
+        <arduino.build.f_cpu>16000000L</arduino.build.f_cpu>
+        <arduino.build.core>standard</arduino.build.core>
+        <arduino.upload.protocol>arduino</arduino.upload.protocol>
+        <arduino.upload.speed>115200</arduino.upload.speed>
+        <arduino.upload.maximum_size>130048</arduino.upload.maximum_size>
+        <visualmicro.application.name>arduino10x</visualmicro.application.name>
+        <visualmicro.package.name>tempuino</visualmicro.package.name>
+        <visualmicro.platform.name>avr</visualmicro.platform.name>
+        <arduino.upload.port>COM3</arduino.upload.port>
+      </VisualMicroSettings>
+    </VisualMicroSettings>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <ToolchainSettings>
+      <AvrGccCpp>
+  <avrgcc.common.outputfiles.hex>True</avrgcc.common.outputfiles.hex>
+  <avrgcc.common.outputfiles.lss>True</avrgcc.common.outputfiles.lss>
+  <avrgcc.common.outputfiles.eep>True</avrgcc.common.outputfiles.eep>
+  <avrgcc.common.outputfiles.srec>True</avrgcc.common.outputfiles.srec>
+  <avrgcc.common.outputfiles.usersignatures>False</avrgcc.common.outputfiles.usersignatures>
+  <avrgcc.compiler.general.ChangeDefaultCharTypeUnsigned>True</avrgcc.compiler.general.ChangeDefaultCharTypeUnsigned>
+  <avrgcc.compiler.general.ChangeDefaultBitFieldUnsigned>True</avrgcc.compiler.general.ChangeDefaultBitFieldUnsigned>
+  <avrgcc.compiler.symbols.DefSymbols>
+    <ListValues>
+      <Value>__AVR_ATmega1284p__</Value>
+      <Value>__AVR_ATmega1284P__</Value>
+      <Value>ARDUINO=105</Value>
+      <Value>ARDUINO_MAIN</Value>
+      <Value>F_CPU=16000000L</Value>
+      <Value>__AVR__</Value>
+    </ListValues>
+  </avrgcc.compiler.symbols.DefSymbols>
+  <avrgcc.compiler.directories.IncludePaths>
+    <ListValues>
+      <Value></Value>
+      <Value>c:/program files (x86)/arduino/hardware/tools/avr/lib/gcc/avr/4.3.2/include/</Value>
+      <Value>c:/program files (x86)/arduino/hardware/tools/avr/avr/</Value>
+      <Value>c:/program files (x86)/arduino/hardware/tools/avr/avr/include/avr/</Value>
+      <Value>c:/program files (x86)/arduino/hardware/tools/avr/avr/include/</Value>
+      <Value>C:/Users/Core2Quad/Documents/Arduino/libraries</Value>
+      <Value>C:/Program Files (x86)/Visual Micro/Visual Micro for Arduino/Micro Platforms/default/debuggers</Value>
+      <Value>c:/Program Files (x86)/Arduino/hardware/tempuino/libraries</Value>
+      <Value>c:/Program Files (x86)/Arduino/libraries</Value>
+      <Value>c:/Program Files (x86)/Arduino/libraries/uipmaster/utility</Value>
+      <Value>c:/Program Files (x86)/Arduino/libraries/uipmaster</Value>
+      <Value>c:/Program Files (x86)/Arduino/libraries/PID_v1/utility</Value>
+      <Value>c:/Program Files (x86)/Arduino/libraries/PID_v1</Value>
+      <Value>c:/Program Files (x86)/Arduino/libraries/rtclib/utility</Value>
+      <Value>c:/Program Files (x86)/Arduino/libraries/rtclib</Value>
+      <Value>c:/Program Files (x86)/Arduino/libraries/MemoryFree/utility</Value>
+      <Value>c:/Program Files (x86)/Arduino/libraries/MemoryFree</Value>
+      <Value>c:/Program Files (x86)/Arduino/libraries/SPI/utility</Value>
+      <Value>c:/Program Files (x86)/Arduino/libraries/SPI</Value>
+      <Value>c:/Program Files (x86)/Arduino/libraries/Temboo/utility</Value>
+      <Value>c:/Program Files (x86)/Arduino/libraries/Temboo</Value>
+      <Value>c:/Program Files (x86)/Arduino/libraries/LiquidTWI2/utility</Value>
+      <Value>c:/Program Files (x86)/Arduino/libraries/LiquidTWI2</Value>
+      <Value>c:/Program Files (x86)/Arduino/libraries/Wire/utility</Value>
+      <Value>c:/Program Files (x86)/Arduino/libraries/Wire</Value>
+      <Value>c:/Program Files (x86)/Arduino/libraries/OneWire/utility</Value>
+      <Value>c:/Program Files (x86)/Arduino/libraries/OneWire</Value>
+      <Value>c:/Program Files (x86)/Arduino/libraries/Task/utility</Value>
+      <Value>c:/Program Files (x86)/Arduino/libraries/Task</Value>
+      <Value>c:/Program Files (x86)/Arduino/hardware/tempuino/variants/standard</Value>
+      <Value>c:/Program Files (x86)/Arduino/hardware/tempuino/cores/standard</Value>
+    </ListValues>
+  </avrgcc.compiler.directories.IncludePaths>
+  <avrgcc.compiler.optimization.level>Optimize (-O1)</avrgcc.compiler.optimization.level>
+  <avrgcc.compiler.optimization.PackStructureMembers>True</avrgcc.compiler.optimization.PackStructureMembers>
+  <avrgcc.compiler.optimization.AllocateBytesNeededForEnum>True</avrgcc.compiler.optimization.AllocateBytesNeededForEnum>
+  <avrgcc.compiler.optimization.DebugLevel>Default (-g2)</avrgcc.compiler.optimization.DebugLevel>
+  <avrgcc.compiler.warnings.AllWarnings>True</avrgcc.compiler.warnings.AllWarnings>
+  <avrgcccpp.compiler.general.ChangeDefaultCharTypeUnsigned>True</avrgcccpp.compiler.general.ChangeDefaultCharTypeUnsigned>
+  <avrgcccpp.compiler.general.ChangeDefaultBitFieldUnsigned>True</avrgcccpp.compiler.general.ChangeDefaultBitFieldUnsigned>
+  <avrgcccpp.compiler.symbols.DefSymbols>
+    <ListValues>
+      <Value>__AVR_ATmega1284p__</Value>
+      <Value>__AVR_ATmega1284P__</Value>
+      <Value>ARDUINO=105</Value>
+      <Value>ARDUINO_MAIN</Value>
+      <Value>F_CPU=16000000L</Value>
+      <Value>__AVR__</Value>
+    </ListValues>
+  </avrgcccpp.compiler.symbols.DefSymbols>
+  <avrgcccpp.compiler.directories.IncludePaths>
+    <ListValues>
+      <Value></Value>
+      <Value>c:/program files (x86)/arduino/hardware/tools/avr/lib/gcc/avr/4.3.2/include/</Value>
+      <Value>c:/program files (x86)/arduino/hardware/tools/avr/avr/</Value>
+      <Value>c:/program files (x86)/arduino/hardware/tools/avr/avr/include/avr/</Value>
+      <Value>c:/program files (x86)/arduino/hardware/tools/avr/avr/include/</Value>
+      <Value>C:/Users/Core2Quad/Documents/Arduino/libraries</Value>
+      <Value>C:/Program Files (x86)/Visual Micro/Visual Micro for Arduino/Micro Platforms/default/debuggers</Value>
+      <Value>c:/Program Files (x86)/Arduino/hardware/tempuino/libraries</Value>
+      <Value>c:/Program Files (x86)/Arduino/libraries</Value>
+      <Value>c:/Program Files (x86)/Arduino/libraries/uipmaster/utility</Value>
+      <Value>c:/Program Files (x86)/Arduino/libraries/uipmaster</Value>
+      <Value>c:/Program Files (x86)/Arduino/libraries/PID_v1/utility</Value>
+      <Value>c:/Program Files (x86)/Arduino/libraries/PID_v1</Value>
+      <Value>c:/Program Files (x86)/Arduino/libraries/rtclib/utility</Value>
+      <Value>c:/Program Files (x86)/Arduino/libraries/rtclib</Value>
+      <Value>c:/Program Files (x86)/Arduino/libraries/MemoryFree/utility</Value>
+      <Value>c:/Program Files (x86)/Arduino/libraries/MemoryFree</Value>
+      <Value>c:/Program Files (x86)/Arduino/libraries/SPI/utility</Value>
+      <Value>c:/Program Files (x86)/Arduino/libraries/SPI</Value>
+      <Value>c:/Program Files (x86)/Arduino/libraries/Temboo/utility</Value>
+      <Value>c:/Program Files (x86)/Arduino/libraries/Temboo</Value>
+      <Value>c:/Program Files (x86)/Arduino/libraries/LiquidTWI2/utility</Value>
+      <Value>c:/Program Files (x86)/Arduino/libraries/LiquidTWI2</Value>
+      <Value>c:/Program Files (x86)/Arduino/libraries/Wire/utility</Value>
+      <Value>c:/Program Files (x86)/Arduino/libraries/Wire</Value>
+      <Value>c:/Program Files (x86)/Arduino/libraries/OneWire/utility</Value>
+      <Value>c:/Program Files (x86)/Arduino/libraries/OneWire</Value>
+      <Value>c:/Program Files (x86)/Arduino/libraries/Task/utility</Value>
+      <Value>c:/Program Files (x86)/Arduino/libraries/Task</Value>
+      <Value>c:/Program Files (x86)/Arduino/hardware/tempuino/variants/standard</Value>
+      <Value>c:/Program Files (x86)/Arduino/hardware/tempuino/cores/standard</Value>
+    </ListValues>
+  </avrgcccpp.compiler.directories.IncludePaths>
+  <avrgcccpp.compiler.optimization.level>Optimize (-O1)</avrgcccpp.compiler.optimization.level>
+  <avrgcccpp.compiler.optimization.PackStructureMembers>True</avrgcccpp.compiler.optimization.PackStructureMembers>
+  <avrgcccpp.compiler.optimization.AllocateBytesNeededForEnum>True</avrgcccpp.compiler.optimization.AllocateBytesNeededForEnum>
+  <avrgcccpp.compiler.optimization.DebugLevel>Default (-g2)</avrgcccpp.compiler.optimization.DebugLevel>
+  <avrgcccpp.compiler.warnings.AllWarnings>True</avrgcccpp.compiler.warnings.AllWarnings>
+  <avrgcccpp.linker.libraries.LibrarySearchPaths>
+    <ListValues>
+      <Value>C:\Program Files\Arduino\libraries\PID</Value>
+    </ListValues>
+  </avrgcccpp.linker.libraries.LibrarySearchPaths>
+  <avrgcccpp.assembler.debugging.DebugLevel>Default (-Wa,-g)</avrgcccpp.assembler.debugging.DebugLevel>
+</AvrGccCpp>
+    </ToolchainSettings>
+    <VMSETTING_IncludePaths>c:/program files/arduino/hardware/arduino/cores/arduino;c:/program files/arduino/hardware/arduino/variants/standard;c:/program files/arduino/libraries/Task;c:/program files/arduino/libraries/Task/utility;e:/Documents and Settings/Jean-Claude/My Documents/Arduino/libraries/OneWire;e:/Documents and Settings/Jean-Claude/My Documents/Arduino/libraries/OneWire/utility;c:/program files/arduino/libraries/Wire;c:/program files/arduino/libraries/Wire/utility;c:/program files/arduino/libraries/LiquidTWI2;c:/program files/arduino/libraries/LiquidTWI2/utility;e:/Documents and Settings/Jean-Claude/My Documents/Arduino/libraries/Temboo;e:/Documents and Settings/Jean-Claude/My Documents/Arduino/libraries/Temboo/utility;c:/program files/arduino/libraries/SPI;c:/program files/arduino/libraries/SPI/utility;c:/program files/arduino/libraries/MemoryFree;c:/program files/arduino/libraries/MemoryFree/utility;c:/program files/arduino/libraries/rtclib;c:/program files/arduino/libraries/rtclib/utility;c:/program files/arduino/libraries/uipmaster;c:/program files/arduino/libraries/uipmaster/utility;c:/program files/arduino/libraries;c:/program files/arduino/hardware/arduino/libraries;C:/Program Files/Visual Micro/Visual Micro for Arduino/Micro Platforms/default/debuggers;e:/Documents and Settings/Jean-Claude/My Documents/Arduino/libraries;c:/program files/arduino/hardware/tools/avr/avr/include/;c:/program files/arduino/hardware/tools/avr/avr/include/avr/;c:/program files/arduino/hardware/tools/avr/avr/;c:/program files/arduino/hardware/tools/avr/lib/gcc/avr/4.3.2/include/;;c:/program files/arduino/hardware/tempuino/cores/standard;c:/program files/arduino/hardware/tempuino/variants/standard;c:/program files/arduino/hardware/tempuino/libraries;c:/program files/arduino/libraries/Time;c:/program files/arduino/libraries/Time/utility;c:/program files/arduino/libraries/Temboo;c:/program files/arduino/libraries/Temboo/utility;E:/Documents and Settings/Jean-Claude/My Documents/Arduino/libraries/OneWire;E:/Documents and Settings/Jean-Claude/My Documents/Arduino/libraries/OneWire/utility;E:/Documents and Settings/Jean-Claude/My Documents/Arduino/libraries/Temboo;E:/Documents and Settings/Jean-Claude/My Documents/Arduino/libraries/Temboo/utility;E:/Documents and Settings/Jean-Claude/My Documents/Arduino/libraries;E:/Documents and Settings/Jean-Claude/My Documents/Arduino/libraries/LiquidTWI2;E:/Documents and Settings/Jean-Claude/My Documents/Arduino/libraries/LiquidTWI2/utility;c:/program files/arduino/libraries/PID;c:/program files/arduino/libraries/PID/utility;c:/program files/arduino/libraries/Adafruit;c:/program files/arduino/libraries/Adafruit/utility;c:/Program Files (x86)/Arduino/hardware/tempuino/cores/standard;c:/Program Files (x86)/Arduino/hardware/tempuino/variants/standard;c:/Program Files (x86)/Arduino/libraries/Task;c:/Program Files (x86)/Arduino/libraries/Task/utility;c:/Program Files (x86)/Arduino/libraries/OneWire;c:/Program Files (x86)/Arduino/libraries/OneWire/utility;c:/Program Files (x86)/Arduino/libraries/Wire;c:/Program Files (x86)/Arduino/libraries/Wire/utility;c:/Program Files (x86)/Arduino/libraries/LiquidTWI2;c:/Program Files (x86)/Arduino/libraries/LiquidTWI2/utility;c:/Program Files (x86)/Arduino/libraries/SPI;c:/Program Files (x86)/Arduino/libraries/SPI/utility;c:/Program Files (x86)/Arduino/libraries/MemoryFree;c:/Program Files (x86)/Arduino/libraries/MemoryFree/utility;c:/Program Files (x86)/Arduino/libraries/rtclib;c:/Program Files (x86)/Arduino/libraries/rtclib/utility;c:/Program Files (x86)/Arduino/libraries/PID_v1;c:/Program Files (x86)/Arduino/libraries/PID_v1/utility;c:/Program Files (x86)/Arduino/libraries/uipmaster;c:/Program Files (x86)/Arduino/libraries/uipmaster/utility;c:/Program Files (x86)/Arduino/libraries;c:/Program Files (x86)/Arduino/hardware/tempuino/libraries;C:/Program Files (x86)/Visual Micro/Visual Micro for Arduino/Micro Platforms/default/debuggers;C:/Users/Core2Quad/Documents/Arduino/libraries;c:/program files (x86)/arduino/hardware/tools/avr/avr/include/;c:/program files (x86)/arduino/hardware/tools/avr/avr/include/avr/;c:/program files (x86)/arduino/hardware/tools/avr/avr/;c:/program files (x86)/arduino/hardware/tools/avr/lib/gcc/avr/4.3.2/include/;c:/Program Files (x86)/Arduino/libraries/Temboo;c:/Program Files (x86)/Arduino/libraries/Temboo/utility;</VMSETTING_IncludePaths>
+    <VisualMicroSettings>
+      <VisualMicroSettings>
+        <arduino.board.name>mighty_opt</arduino.board.name>
+        <arduino.board.desc>Tempuino 1284 16MHz using Optiboot</arduino.board.desc>
+        <arduino.board.property_bag>name=Tempuino 1284 16MHz using Optiboot
+upload.protocol=arduino
+upload.maximum_size=130048
+upload.speed=115200
+bootloader.low_fuses=0xff
+bootloader.high_fuses=0xde
+bootloader.extended_fuses=0xfd
+bootloader.path=optiboot
+bootloader.file=optiboot_atmega1284p.hex
+bootloader.unlock_bits=0x3F
+bootloader.lock_bits=0x0F
+build.mcu=atmega1284p
+build.f_cpu=16000000L
+build.core=standard
+build.variant=standard
+runtime.ide.path=c:\program files\arduino
+build.system.path=c:\program files\arduino\hardware\tempuino\system
+runtime.ide.version=105
+originalid=mighty_opt
+vm.platform.root.path=C:\Program Files\Visual Micro\Visual Micro for Arduino\Micro Platforms\arduino10x
+ide.hint=Arduino 0023 and 1.0.x Ide
+ide.location.key=Arduino
+ide.location.ide.winreg=Arduino 1.0.x Application
+ide.location.sketchbook.winreg=Arduino 1.0.x Sketchbook
+ide.location.sketchbook.preferences=sketchbook.path
+ide.location.sketchbook.default=%MYDOCUMENTS%\arduino
+ide.location.preferences=%VM_APPDATA_ROAMING%\arduino\preferences.txt
+ide.default.package=arduino
+ide.default.platform=avr
+ide.multiplatform=true
+ide.includes=arduino.h
+ide.platformswithoutpackage=true
+ide.includes.fallback=wprogram.h
+ide.extension=ino
+ide.extension.fallback=pde
+ide.versionLTEQ=149
+ide.exe=arduino.exe
+ide.hosts=atmel
+ide.url=http://arduino.cc/en/Main/Software
+vm.debug=true
+software=ARDUINO
+ide.appid=arduino10x
+location.sketchbook=e:\Documents and Settings\Jean-Claude\My Documents\Arduino\
+vm.core.include=arduino.h
+build.board=AVR_MIGHTY_OPT
+vm.boardsource.path=c:\program files\arduino\hardware\tempuino
+runtime.platform.path=c:\program files\arduino\hardware\tempuino
+vm.platformname.name=avr
+build.arch=AVR
+</arduino.board.property_bag>
+        <arduino.build.mcu>atmega1284p</arduino.build.mcu>
+        <arduino.build.f_cpu>16000000L</arduino.build.f_cpu>
+        <arduino.build.core>standard</arduino.build.core>
+        <arduino.upload.protocol>arduino</arduino.upload.protocol>
+        <arduino.upload.speed>115200</arduino.upload.speed>
+        <arduino.upload.maximum_size>130048</arduino.upload.maximum_size>
+        <visualmicro.application.name>arduino10x</visualmicro.application.name>
+        <visualmicro.package.name>tempuino</visualmicro.package.name>
+        <visualmicro.platform.name>avr</visualmicro.platform.name>
+        <arduino.upload.port>COM3</arduino.upload.port>
+      </VisualMicroSettings>
+    </VisualMicroSettings>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="ArduinoHome.ino">
+      <SubType>compile</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Visual Micro\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Alarms.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Alarms.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Clock.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Clock.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="jc.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Regulation.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Globals.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Globals.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Mail.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Mail.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Menu.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Menu.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Power.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Power.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="ReadTemp.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="ReadTemp.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Regulation.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="SendData.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="SendData.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="StringList.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Visual Micro\.ArduinoHome.vsarduino.h">
+      <SubType>compile</SubType>
+    </Compile>
+  </ItemGroup>
+  <Import Project="$(AVRSTUDIO_EXE_PATH)\\Vs\\Compiler.targets" />
+</Project>

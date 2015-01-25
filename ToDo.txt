@@ -1,0 +1,4 @@
+- Tester mise à jour RTC avec le URL
+- Ajouter Events pour les messages autres que des alarmes (RTC Update)
+- Ajouter les températures dans le menu
+- Ajouter les capteurs et mettre à jour Xively
