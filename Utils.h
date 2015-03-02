@@ -2,6 +2,7 @@
 #define UTILS_h
 
 #include <Arduino.h>
+#include <EEPROM.h>
 
 
 

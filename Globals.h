@@ -12,13 +12,21 @@
 #include "SendData.h"
 #include "Mail.h"
 #include "credentials.h"
+#include "NoIP.h"
+#include "Server.h"
 
+class WebSvrClass;
 class Menu;
 class ReadTemp;
 class Power;
 class SendData; 
 class SendAlarm;
 class Clock;
+class NoIPUpdater;
+class WebServer;
+
+
+
 
 // arduino inputs used for OneWire
 #define SummerTime				4 // 0 = Normal time
@@ -49,6 +57,8 @@ class Clock;
 #define ReadPowerLed			3
 #define SendDataLed				4
 #define SendAlarmsLed			5
+#define NoIPLed					6
+#define ServerLed				7
 
 //Global data
 extern byte mac[];
@@ -64,13 +74,35 @@ extern OneWire ds2;
 extern LiquidTWI2 lcd;
 extern UIPClient client;
 
+
 extern Menu menu;
 extern Clock clock;
 extern Power power;
 extern ReadTemp readT;
 extern SendData sendData;
 extern SendAlarm sendAlarm;
+extern NoIPUpdater NoIP;
+//extern WebServer webServer;
+extern WebSvrClass WebSvr;
 
+struct _group {
+	byte time[4];
+	byte setpoint[4];
+};
+
+struct _channel {
+	_group group[2];
+};
+
+struct _config {
+	_channel channel[6];
+};
+
+extern _config config;
+void setDefaultConfig();
+
+byte minutes(byte H, byte M);
+String changetime(byte c, byte g, byte n);
 
 #endif
 

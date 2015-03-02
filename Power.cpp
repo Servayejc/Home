@@ -2,6 +2,7 @@
 #include "Power.h"
 #include "Utils.h"
 
+
 Power::Power(uint32_t _rate) :
 TimedTask(millis()),
 	rate(_rate),

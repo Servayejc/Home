@@ -75,6 +75,7 @@ void Menu::run(uint32_t now)
 		if (n != OldValue)
 		{
 			OldValue = n;
+			Serial.print(n);
 			byte  OldMenuPos = MenuPos;
 			if (checkBit(n, 0)) MenuPos = MenuStruct[MenuPos][1];	// S
 			if (checkBit(n, 1)) MenuPos = MenuStruct[MenuPos][0];	// E
