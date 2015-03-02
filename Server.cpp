@@ -174,7 +174,7 @@ void WebServer::Head()
 }
 
 void WebServer::Default() {
-	client.println("<body><h1>Temperatures</h1>");
+	client.println("<body><h1>Configuration</h1>");
 	client.println("<form action=""EDIT"" method=""post"">");
 	client.println("<table style='width:50%'>");
 	//client.println("<tr><th>Sensor</th><th>Temp</th><th>Setpoint</th><th>Edit</th></tr>");
