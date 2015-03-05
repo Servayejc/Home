@@ -5,6 +5,7 @@
 #include "Server.h"
 #include "Globals.h"
 #include "Utils.h"
+#include "HConfig.h"
 
 #define DEFAULT 1
 #define EDIT 	2
@@ -27,45 +28,27 @@ void WebServer::init() {
 	//load_config();
 }
 
-void WebServer::processPair(String tag, String val) {
-	int value;
-	int tagNum = tag.toInt();
-	int ndx = val.indexOf("%3A"); // %3A = ':'
-	//   Serial.println(val);
-	if (ndx > -1) {
-		int H = val.substring(0,ndx).toInt();
-		int M = val.substring(ndx+3, val.length()).toInt();
-		value = minutes(H,M);
-	}
-	else
-	{
-		value = val.toInt();
-	}
-	
-	//Serial.print(tagNum);
-	//Serial.print(':');
-	//Serial.println(value);
-	
-	// Write data back to config;
-	byte x = tagNum % 10 -1;
-	
-	if (tagNum < 100) {
-		switch (tagNum / 10) {
-		case 1 :
-			config.channel[EditIndex].group[0].time[x] = value;
-			break;
-		case 2 :
-			config.channel[EditIndex].group[0].setpoint[x] = value;
-			break;
-		case 3 :
-			config.channel[EditIndex].group[1].time[x] = value;
-			break;
-		case 4 :
-			config.channel[EditIndex].group[1].setpoint[x] = value;
-			break;
-		}
-	}
-}
+// HTML
+
+void WebServer::tr()				{ client.print("<tr>"); }
+void WebServer::ctr()				{ client.print("</tr>"); }
+void WebServer::td(String value)	{ client.print("<td>"); 
+                                      client.print(value);}
+void WebServer::td()				{ client.print("<td>"); }
+void WebServer::ctd()				{ client.print("</td>"); }
+void WebServer::tdv(String value)   { client.print("<td>"); 
+                                      client.print(value);
+								      client.print("</td>");}
+void WebServer::form(String name) { client.print("<form action=""");
+									client.print(name);
+									client.print(""" method=""post"">"); }
+void WebServer::cform() { client.print("</form>"); }
+void WebServer::br() { client.print("<br>"); }
+void WebServer::table() { client.print("<table>"); }
+void WebServer::ctable() { client.print("</table>"); }
+void WebServer::submit() {client.print("<input type=submit value=submit>");}
+void WebServer::body(String title) {client.print("<body><h1>"); client.print(title); client.print("</h1>");}
+void WebServer::cbody() {client.print("</body>");}
 
 void WebServer::ProcessData(String aLine) {
 	Serial.println("process data");
@@ -82,7 +65,7 @@ void WebServer::ProcessData(String aLine) {
 		String val = aLine.substring(ndx1+1, ndx2);
 		aLine = aLine.substring(ndx2+1,aLine.length());
 		if (tag.toInt() == 100) EditIndex = val.toInt();
-		processPair(tag, val);
+		Config.setPair( EditIndex, tag, val);
 	}
 }
 
@@ -90,71 +73,51 @@ void WebServer::load_config() {
 
 }
 
-int WebServer::EEPROM_writeConf() {
-	Serial.println("Write Conf");
-	byte Address = 0;
-	
-	const byte* p = (const byte*)(const void*)&CONFIGURATION;
-	int i;
-	for (i = 0; i < sizeof(CONFIGURATION); i++)
-	EEPROM.write(Address++, *p++);
-	return i;
-}
-
-int WebServer::EEPROM_readConf() {
-	Serial.println("Read Conf");
-	byte Address = 0;
-	byte* p = (byte*)(void*)&CONFIGURATION;
-	int i;
-	for (i = 0; i < sizeof(CONFIGURATION); i++)
-	*p++ = EEPROM.read(Address++);
-	return i;
-}
-
 void WebServer::Input(int ID, String Value) {
-	client.print("<td><input class=""none"" type=""text"" name=""");
+	td();
+	client.print("<input class=""none"" type=""text"" name=""");
 	client.print(ID);
 	client.print(""" value = """);
 	client.print(Value);
-	client.println("""></td>");
+	client.println(""">");
+	ctd();
 }
 
 void WebServer::TableRow(String V1,String V2,String V3,String V4) {
-	client.print("<tr><td>");
-	client.print(V1);
-	client.print("</td><td>");
-	client.print(V2);
-	client.print("</td><td>");
-	client.print(V3);
-	client.print("</td><td><input type='radio' name='100' Value='");
-	client.print(V4);
-	client.println("'</td></tr>");
+	tr(); 
+	tdv(V1);
+	tdv(V2);
+	tdv(V3);
+	td();
+		client.print("<input type='radio' name='100' Value='");
+		client.print(V4);
+		client.print("'>");
+	ctd(); 
+	ctr();
 }
 
 void WebServer::ConfigRowT(byte c, byte g)  {
-	client.print("<tr>");
-	for (byte n = 0; n < 4; n++) {
-		client.print("<td>");
-		client.print(changetime(c,g,n));
-		client.print("</td>");
-	}
-	client.print("<td>");
-	client.print("<input type='radio' name='100' Value='");
-	client.print(c);
-	client.print("'</td>");
-	client.println("<tr>");
-		
-	client.print("<tr>");
+	tr();
 		for (byte n = 0; n < 4; n++) {
-			client.print("<td>");
-			client.print((config.channel[c].group[g].setpoint[n]));
-			client.print("</td>");
+			tdv(Config.getTimeString(c,g,n));
 		}
-	client.print("<td>");
-	client.print("<input type='radio' name='100' Value='");
-	client.print(c);
-	client.print("'</td>");
-	client.println("<tr>");
+		td();
+			client.print("<input type='radio' name='100' Value='");
+			client.print(c);
+			client.print("'>");
+		ctd();
+	ctr();	
+
+	tr();
+		for (byte n = 0; n < 4; n++) {
+		 	tdv(String(Config.getSetPoint(c,g,n)));
+		}
+		td();	
+			client.print("<input type='radio' name='100' Value='");
+			client.print(c);
+			client.print("'>");
+		ctd();
+	ctr();
 }
 
 void WebServer::HTTP200()
@@ -167,97 +130,82 @@ void WebServer::HTTP200()
 
 void WebServer::Head()
 {
-	client.println("<head><title>Maison NH</title>");
-	client.println("<style>table, th, td {border: 1px solid black;border-collapse: collapse;}");
-	client.println("input.none {border-style: none;}");
-	client.println("</style></head>");
+	client.println("<!DOCTYPE HTML>");
+	client.println("<html>");
+	client.print("<head><title>Maison NH</title>");
+	client.print("<style>table, th, td {border: 1px solid black;border-collapse: collapse;}");
+	client.print("input.none {border-style: none;}");
+	client.print("</style></head>");
 }
 
 void WebServer::Default() {
-	client.println("<body><h1>Configuration</h1>");
-	client.println("<form action=""EDIT"" method=""post"">");
-	client.println("<table style='width:50%'>");
-	//client.println("<tr><th>Sensor</th><th>Temp</th><th>Setpoint</th><th>Edit</th></tr>");
-	
-    for (byte c = 0; c < 6; c++) {
-	 	for (byte g = 0; g < 2; g++) {
-			ConfigRowT(c,g);
-		 }
-	}
-	
-	/*TableRow("Exterieur","-25","NA","0");
-	TableRow("Foyer","35","NA","1");
-	TableRow("Salon","21.5","22","2");
-	TableRow("Sous-Sol","19.2","19","3");
-	TableRow("Chambre3","20","19","4");
-	TableRow("Salle de bain","23","22","5");*/
-	client.println("</table>");
-	client.println("<br>");
-	client.println("<input type=submit value=submit>");
-	client.println("</form>");
-	client.println("<br>");
-	//client.println("Save settings in EEPROM");*/
-	
-	//client.println("<input type=submit value=submit>");
-	//	client.println("<form action=""EEPROM"" method=""post"">");
-	//	client.println("</form>");
-	client.println("</body>");
+	body(String("Configuration"));
+	form(String("EDIT"));
+		table();
+			for (byte c = 0; c < 6; c++) {
+				for (byte g = 0; g < 2; g++) {
+					ConfigRowT(c,g);
+				}
+			}
+		ctable();
+		br();
+		submit();
+	cform();
+	br();
+	submit();
+	cbody();
 }
 
 void WebServer::Edit(byte channel) {
-	
-	client.println("<body><h1>Edit</h1>");
+	body(String("Edit"));
 	client.print("Editing channel: ");
 	client.println(EditIndex);
-	client.println("<form action=""HOME"" method=""post"">");
-	client.print("<input type=""hidden"" name=""100"" value=""");
+	form(String("HOME"));
+	client.print("<input type='hidden' name='100' value='");
 	client.print(EditIndex);
-	client.println(""">");
+	client.println("'>");
 	for (byte g = 0; g < 2; g++) {
-		client.println("<table>");
+
 		if (g == 0)
-		client.println("Semaine");
+			client.println("Semaine");
 		else
-		client.println("Samedi et dimanche");
-		
-		client.println("<tr>");
-		client.println("<td>");
-		client.println("Heure");
-		client.println("</td>");
-		
-		for (byte i = 0; i < 4; i++) {
-			Input(i+11+20*g,changetime(channel,g,i));
-		}
-		client.println("</tr>");
-		
-		client.println("<tr>");
-		client.println("<td>");
-		client.println("Temperature");
-		client.println("</td>");
-		
-		for (byte i = 0; i < 4; i++) {
-			Input(i+21+20*g,String(config.channel[channel].group[g].setpoint[i]));
-		}
-		client.println("</tr>");
-		client.println("</table>");
-		client.println("<br>");
+			client.println("Samedi et dimanche");
+		table();
+			tr();
+				td();
+					client.println("Heure");
+				ctd();
+				for (byte i = 0; i < 4; i++) {
+					Input(i+11+20*g,Config.getTimeString(channel,g,i));
+				}
+			ctr();
+			
+			tr();
+				td();
+					client.println("Temperature");
+				ctd();
+				for (byte i = 0; i < 4; i++) {
+					Input(i+21+20*g,String(Config.getSetPoint(channel,g,i)));
+				}
+			ctr();
+		ctable();
+		br();
 	}
-	client.println("<input type=submit value=submit>");
-	client.println("</form>");
-	client.println("</body>");
+	submit();
+	cform();
+	cbody();
 }
 
 void WebServer::Eeprom() {
-	client.println("<body><h1>Configuration saved</h1>");
-	client.println("<form action=""HOME"" method=""post"">");
-	client.println("<input type=submit value=submit>");
-	client.println("</form>");
-	client.println("</body>");
+
+	body(String("Configuration saved"));
+	form(String("HOME"));
+	submit();
+	cform();
+	cbody();
 }
 
 void WebServer::ProcessReceivedLine(String line) {
-	//Serial.println(line);
-	
 	if ((HeaderEnd == true) && (dataSize > 0)) {
 		line = line.substring(0,dataSize);
 	}
@@ -320,18 +268,10 @@ void WebServer::readContent() {
 
 void WebServer::executeCommand() {
 	HTTP200();
-	client.println("<!DOCTYPE HTML>");
-	client.println("<html>");
 	Head();
-	if (page == DEFAULT)
-	{Default();
-	}
-	if (page == EDIT)
-	{Edit(EditIndex);
-	}
-	if (page == SAVE)
-	{Eeprom();
-	}
+	if (page == DEFAULT){Default();}
+	if (page == EDIT) 	{Edit(EditIndex);}
+	if (page == SAVE) 	{Eeprom();}
 	client.println("</html>");
 }
 

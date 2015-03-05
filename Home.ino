@@ -28,15 +28,18 @@
 #include "Menu.h"
 #include "NoIP.h"
 #include "Server.h"
+#include "HConfig.h"
 #include <PID_v1.h>
+
 
 void setup() {
 	Serial.begin(115200);
 	ethernetConnect();
 	pinMode(14, OUTPUT);
+	Config.loadFromEEPROM();
 	//setDefaultConfig();
 	//EEPROM.writeBlock<_config>(0, config);
-	EEPROM.readBlock<_config>(0, config);
+	//EEPROM.readBlock<_config>(0, config);
 }
 
 // Main program.

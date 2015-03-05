@@ -74,8 +74,6 @@ const byte    Sensors[SensorsCount][8] =
 
 	// Ethernet
 	UIPClient	client;
-
-
 	Power		power(2000);
 	Menu		menu(100);
 	Clock		clock(1000);
@@ -84,54 +82,7 @@ const byte    Sensors[SensorsCount][8] =
 	SendAlarm	sendAlarm(15000);
 	NoIPUpdater NoIP(600000);
 	WebServer	webServer(200);
-
-	_config config;
-
-
-byte minutes(byte H, byte M) {
-		return H*6 + M/10; // period of 10 minutes
-}
-
-String changetime(byte c, byte g, byte n) {
-	byte x = config.channel[c].group[g].time[n];
-	byte H = x/6;
-	byte M = x % 6;
-	String result(' ');
-	if (H < 10)
-	{
-		result += '0';
-		result += H;
-	}
-	else
-	{
-		result += H;
-	}
 	
-	result += ':';
-	
-	if (M > 0)
-	{
-		result += M;
-	}
-	else
-	{
-		result += "00";
-	}
 
-	return result;
-}
 
-void setDefaultConfig() {
-	for (byte c = 0; c < 6; c++) {
-		for (byte g = 0; g < 2; g++) {
-			config.channel[c].group[g].time[0] = minutes(6,00);
-			config.channel[c].group[g].setpoint[0] = 22;
-			config.channel[c].group[g].time[1] = minutes(7,00);
-			config.channel[c].group[g].setpoint[1] = 19;
-			config.channel[c].group[g].time[2] = minutes(16,00);
-			config.channel[c].group[g].setpoint[2] = 22;
-			config.channel[c].group[g].time[3] = minutes(22,00);
-			config.channel[c].group[g].setpoint[3] = 19;
-		}
-	}
-}
+

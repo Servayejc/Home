@@ -24,7 +24,7 @@ class SendAlarm;
 class Clock;
 class NoIPUpdater;
 class WebServer;
-
+class HConfig;
 
 
 
@@ -82,27 +82,8 @@ extern ReadTemp readT;
 extern SendData sendData;
 extern SendAlarm sendAlarm;
 extern NoIPUpdater NoIP;
-//extern WebServer webServer;
 extern WebSvrClass WebSvr;
 
-struct _group {
-	byte time[4];
-	byte setpoint[4];
-};
-
-struct _channel {
-	_group group[2];
-};
-
-struct _config {
-	_channel channel[6];
-};
-
-extern _config config;
-void setDefaultConfig();
-
-byte minutes(byte H, byte M);
-String changetime(byte c, byte g, byte n);
 
 #endif
 

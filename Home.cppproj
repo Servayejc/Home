@@ -489,6 +489,12 @@
     <Compile Include="Clock.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="HConfig.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="HConfig.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="Credentials.h">
       <SubType>compile</SubType>
     </Compile>
@@ -499,12 +505,6 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Home.ino">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="jc.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="jc.h.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Mail.cpp">

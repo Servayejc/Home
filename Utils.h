@@ -4,8 +4,6 @@
 #include <Arduino.h>
 #include <EEPROM.h>
 
-
-
 bool	ethernetConnect();
 bool	xyvelyEnabled();
 bool	alarmsEnabled();
