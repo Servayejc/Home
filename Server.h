@@ -17,17 +17,12 @@ public TimedTask
 private:
 	uint32_t rate;
 	bool on;
-		
-	int  EEPROM_readConf();
-	int  EEPROM_writeConf();
-	void load_config(); 
 
 	boolean HeaderEnd;
 	int page;
 	int dataSize;
 	byte EditIndex;	
 	
-
 	void body();
 	void TableRow(String V1,String V2,String V3,String V4);
 	void ConfigRowT(byte c, byte g);
@@ -61,11 +56,8 @@ private:
 	void submit();
 	void body(String title);
 	void cbody();
-	
 	void Input(int ID, String Value);
 
-	bool override;
-	
 	EthernetClient client;
 };
 

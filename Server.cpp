@@ -69,10 +69,6 @@ void WebServer::ProcessData(String aLine) {
 	}
 }
 
-void WebServer::load_config() {
-
-}
-
 void WebServer::Input(int ID, String Value) {
 	td();
 	client.print("<input class=""none"" type=""text"" name=""");
