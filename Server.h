@@ -30,7 +30,7 @@ private:
 	void Default();
 	void Params();
 	void Edit(byte channel);
-	void Eeprom();
+	void Save();
 	void HTTP200();
 	void Response();
 	void settings();

@@ -11,7 +11,7 @@
 #define PARAMS  2
 #define EDIT 	3
 #define SAVE	4
-  
+   
 
 EthernetServer server = EthernetServer(80);
 
@@ -132,6 +132,7 @@ void WebServer::Default() {
 
 void WebServer::Params() {
 	body(String("Configuration"));
+	
 	form(String("EDIT"));
 		table();
 			for (byte c = 0; c < 6; c++) {
@@ -143,12 +144,15 @@ void WebServer::Params() {
 		br();
 		submit(String("Edit"));
 	cform();
+	
 	br();
-	form(String("SavetoEEPROM"));
+	
+	form(String("SAVE"));
 	client.print("<input type='hidden' name='110' value='110'>");
 	br();
-	submit(String("Save"));
+	submit(String("Save to EEPROM"));
 	cform();
+	
 	cbody();
 }
 
@@ -187,15 +191,16 @@ void WebServer::Edit(byte channel) {
 		ctable();
 		br();
 	}
-	submit(String("Save"));
+	submit(String("Ok"));
 	cform();
 	cbody();
 }
 
-void WebServer::Eeprom() {
+void WebServer::Save() {
 	body(String("Configuration saved"));
-	form(String("HOME"));
-	submit(String("Save"));
+	form(String("DEFAULT"));
+	client.print("<input type='hidden' name='999' value='999'>");
+	submit(String("Ok"));
 	cform();
 	cbody();
 }
@@ -216,10 +221,7 @@ void WebServer::ProcessData(String aLine) {
 		aLine = aLine.substring(ndx2+1,aLine.length());
 		if (tag.toInt() == 100) EditIndex = val.toInt();
 		Config.setPair( EditIndex, tag, val);
-		if (tag.toInt() == 110) {
-			Serial.println("Request to save");
-			Config.saveToEEPROM();
-		}
+	
 	}
 }
 
@@ -235,11 +237,9 @@ void WebServer::executeCommand() {
 	if (page == EDIT) {
 		Edit(EditIndex);
 	}
-	else {
-		//Default();
-	}
+
 	if (page == SAVE) {
-		Eeprom();
+		Save();
 	}
 	client.println("</html>");
 }
@@ -261,17 +261,19 @@ void WebServer::ProcessReceivedLine(String line) {
 		Serial.println("POST /EDIT");
 		page = EDIT;
 	}
-	// when the client submit the edit
-/*	if (line.indexOf("POST /PARAMS") == 0) {
-		Serial.println("POST /PARAMS");
-		page = PARAMS;
-	}*/
 	// when the client ask to save
-	if (line.indexOf("POST /EEPROM") == 0) {
+	if (line.indexOf("POST /SAVE") == 0) {
 		//		EEPROM_writeConf();
-		Serial.println("POST /EEPROM");
+		Serial.println("POST /SAVE");
 		page = SAVE;
 	}
+		// when the client ask to save
+	if (line.indexOf("POST /DEFAULT") == 0) {
+		//		EEPROM_writeConf();
+		Serial.println("POST /DEFAULT");
+		page = DEFAULT;
+	}
+
 	// when client ask the page
 	if (line.indexOf("GET / ") == 0) {
 		Serial.println("GET / ");
