@@ -70,7 +70,7 @@ String HConfig::getTimeString(byte channel, byte group, byte ndx) {
 	
 	if (M > 0)
 	{
-		result += M;
+		result += M*10;
 	}
 	else
 	{

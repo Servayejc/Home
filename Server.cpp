@@ -8,8 +8,10 @@
 #include "HConfig.h"
 
 #define DEFAULT 1
-#define EDIT 	2
-#define SAVE	3
+#define PARAMS  2
+#define EDIT 	3
+#define SAVE	4
+  
 
 EthernetServer server = EthernetServer(80);
 
@@ -46,28 +48,12 @@ void WebServer::cform() { client.print("</form>"); }
 void WebServer::br() { client.print("<br>"); }
 void WebServer::table() { client.print("<table>"); }
 void WebServer::ctable() { client.print("</table>"); }
-void WebServer::submit() {client.print("<input type=submit value=submit>");}
+void WebServer::submit(String caption) {client.print("<input type=submit value='");
+										client.print(caption);
+										client.print("'>");}
 void WebServer::body(String title) {client.print("<body><h1>"); client.print(title); client.print("</h1>");}
 void WebServer::cbody() {client.print("</body>");}
 
-void WebServer::ProcessData(String aLine) {
-	Serial.println("process data");
-	int ndx1;
-	int ndx2;
-	while (aLine.length() > 0) {
-		ndx1 = aLine.indexOf("=");
-		if (ndx1 == -1) break;  // no more pair
-		ndx2 = aLine.indexOf("&");
-		if (ndx2 == -1) {
-			ndx2 = aLine.length();
-		} // in case of last pair
-		String tag = aLine.substring(0,ndx1);
-		String val = aLine.substring(ndx1+1, ndx2);
-		aLine = aLine.substring(ndx2+1,aLine.length());
-		if (tag.toInt() == 100) EditIndex = val.toInt();
-		Config.setPair( EditIndex, tag, val);
-	}
-}
 
 void WebServer::Input(int ID, String Value) {
 	td();
@@ -136,6 +122,16 @@ void WebServer::Head()
 
 void WebServer::Default() {
 	body(String("Configuration"));
+	form(String("PARAMS"));
+	client.print("Page principale");
+	client.print("<input type='hidden' name='120' value='120'>");
+	submit(String("Params"));
+	cform();
+	cbody();	
+}
+
+void WebServer::Params() {
+	body(String("Configuration"));
 	form(String("EDIT"));
 		table();
 			for (byte c = 0; c < 6; c++) {
@@ -145,10 +141,14 @@ void WebServer::Default() {
 			}
 		ctable();
 		br();
-		submit();
+		submit(String("Edit"));
 	cform();
 	br();
-	submit();
+	form(String("SavetoEEPROM"));
+	client.print("<input type='hidden' name='110' value='110'>");
+	br();
+	submit(String("Save"));
+	cform();
 	cbody();
 }
 
@@ -156,7 +156,7 @@ void WebServer::Edit(byte channel) {
 	body(String("Edit"));
 	client.print("Editing channel: ");
 	client.println(EditIndex);
-	form(String("HOME"));
+	form(String("PARAMS"));
 	client.print("<input type='hidden' name='100' value='");
 	client.print(EditIndex);
 	client.println("'>");
@@ -187,18 +187,61 @@ void WebServer::Edit(byte channel) {
 		ctable();
 		br();
 	}
-	submit();
+	submit(String("Save"));
 	cform();
 	cbody();
 }
 
 void WebServer::Eeprom() {
-
 	body(String("Configuration saved"));
 	form(String("HOME"));
-	submit();
+	submit(String("Save"));
 	cform();
 	cbody();
+}
+
+void WebServer::ProcessData(String aLine) {
+	Serial.println("process data");
+	int ndx1;
+	int ndx2;
+	while (aLine.length() > 0) {
+		ndx1 = aLine.indexOf("=");
+		if (ndx1 == -1) break;  // no more pair
+		ndx2 = aLine.indexOf("&");
+		if (ndx2 == -1) {
+			ndx2 = aLine.length();
+		} // in case of last pair
+		String tag = aLine.substring(0,ndx1);
+		String val = aLine.substring(ndx1+1, ndx2);
+		aLine = aLine.substring(ndx2+1,aLine.length());
+		if (tag.toInt() == 100) EditIndex = val.toInt();
+		Config.setPair( EditIndex, tag, val);
+		if (tag.toInt() == 110) {
+			Serial.println("Request to save");
+			Config.saveToEEPROM();
+		}
+	}
+}
+
+void WebServer::executeCommand() {
+	HTTP200();
+	Head();
+	if (page == DEFAULT) {
+		Default();
+	}
+	if (page == PARAMS)	{
+		Params();
+	}
+	if (page == EDIT) {
+		Edit(EditIndex);
+	}
+	else {
+		//Default();
+	}
+	if (page == SAVE) {
+		Eeprom();
+	}
+	client.println("</html>");
 }
 
 void WebServer::ProcessReceivedLine(String line) {
@@ -208,21 +251,30 @@ void WebServer::ProcessReceivedLine(String line) {
 	if (line.length() == 0 ) {
 		HeaderEnd = true;
 	}
+	// when client ask params
+	if (line.indexOf("POST /PARAMS") == 0) {
+		Serial.println("POST /PARAMS");
+		page = PARAMS;
+	}
 	// when client ask edit
 	if (line.indexOf("POST /EDIT") == 0) {
+		Serial.println("POST /EDIT");
 		page = EDIT;
 	}
 	// when the client submit the edit
-	if (line.indexOf("POST /HOME") == 0) {
-		page = DEFAULT;
-	}
+/*	if (line.indexOf("POST /PARAMS") == 0) {
+		Serial.println("POST /PARAMS");
+		page = PARAMS;
+	}*/
 	// when the client ask to save
 	if (line.indexOf("POST /EEPROM") == 0) {
 		//		EEPROM_writeConf();
+		Serial.println("POST /EEPROM");
 		page = SAVE;
 	}
 	// when client ask the page
 	if (line.indexOf("GET / ") == 0) {
+		Serial.println("GET / ");
 		page = DEFAULT;
 	}
 	
@@ -262,14 +314,6 @@ void WebServer::readContent() {
 	}
 }
 
-void WebServer::executeCommand() {
-	HTTP200();
-	Head();
-	if (page == DEFAULT){Default();}
-	if (page == EDIT) 	{Edit(EditIndex);}
-	if (page == SAVE) 	{Eeprom();}
-	client.println("</html>");
-}
 
 void WebServer::run(uint32_t now) {
 	// listen for incoming clients

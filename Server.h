@@ -28,6 +28,7 @@ private:
 	void ConfigRowT(byte c, byte g);
 	void Head();
 	void Default();
+	void Params();
 	void Edit(byte channel);
 	void Eeprom();
 	void HTTP200();
@@ -53,7 +54,7 @@ private:
 	void br();
 	void table();
 	void ctable();
-	void submit();
+	void submit(String caption);
 	void body(String title);
 	void cbody();
 	void Input(int ID, String Value);
