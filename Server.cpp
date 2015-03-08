@@ -115,15 +115,34 @@ void WebServer::Head()
 	client.println("<!DOCTYPE HTML>");
 	client.println("<html>");
 	client.print("<head><title>Maison NH</title>");
-	client.print("<style>table, th, td {border: 1px solid black;border-collapse: collapse;}");
+	client.print("<style>table, th, td {border: 1px solid black;border-collapse: collapse; padding:5px;}");
 	client.print("input.none {border-style: none;}");
+	client.print("table {width: 50%;}");
+
 	client.print("</style></head>");
 }
 
 void WebServer::Default() {
-	body(String("Configuration"));
+	body(String("Temperatures"));
 	form(String("PARAMS"));
-	client.print("Page principale");
+	table();
+	for (byte i = 0; i < MenuItemsCount; i++){
+	  if (MenuStruct[i][4] < 255) {
+		tr();
+			td(String(MenuTexts[i]));
+			ctd();
+			td(FormatTemp(Temperatures[MenuStruct[i][4]]));
+			ctd();
+			td(String("22"));
+			ctd();
+			td(String("OFF"));
+			ctd();
+		ctr();
+      }		
+	}   
+	ctable();
+	br();
+	form(String("PARAMS"));
 	client.print("<input type='hidden' name='120' value='120'>");
 	submit(String("Params"));
 	cform();
@@ -131,6 +150,7 @@ void WebServer::Default() {
 }
 
 void WebServer::Params() {
+	long Time = millis();
 	body(String("Configuration"));
 	
 	form(String("EDIT"));
@@ -154,6 +174,7 @@ void WebServer::Params() {
 	cform();
 	
 	cbody();
+	Serial.println(millis() - Time);
 }
 
 void WebServer::Edit(byte channel) {
@@ -239,6 +260,7 @@ void WebServer::executeCommand() {
 	}
 
 	if (page == SAVE) {
+		Config.saveToEEPROM();
 		Save();
 	}
 	client.println("</html>");
