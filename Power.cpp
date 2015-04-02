@@ -22,6 +22,7 @@ void  Power::run(uint32_t now){
 	menu.setLed(ReadPowerLed);
 	//ReadPower();
 	incRunTime(rate);
+	WDTReset();
 }
 
 void Power::calcEnergy(int channel, long seconds){

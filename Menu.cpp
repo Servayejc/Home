@@ -75,7 +75,8 @@ void Menu::run(uint32_t now)
 		if (n != OldValue)
 		{
 			OldValue = n;
-			Serial.print(n);
+            Serial.print(n);
+			
 			byte  OldMenuPos = MenuPos;
 			if (checkBit(n, 0)) MenuPos = MenuStruct[MenuPos][1];	// S
 			if (checkBit(n, 1)) MenuPos = MenuStruct[MenuPos][0];	// E
@@ -83,6 +84,7 @@ void Menu::run(uint32_t now)
 			if (checkBit(n, 3)) MenuPos = MenuStruct[MenuPos][2];	// W
 			if (checkBit(n, 4)) Execute();							// Enter
 			if (MenuPos == 0) MenuPos = OldMenuPos;
+			
 			if (OldMenuPos != MenuPos)
 			{
 				LCDSetMenu(MenuTexts[MenuPos]);
@@ -93,6 +95,7 @@ void Menu::run(uint32_t now)
 		}
 	}
 	incRunTime(rate);
+	WDTReset();
 }
 
 void Menu::ShowTemperature() {
@@ -107,6 +110,9 @@ void Menu::ShowTemperature() {
 
 void Menu::Execute()
 {
+		Serial.print('-');
+		Serial.print(MenuPos);
+		Serial.println('-');
 	if (LCD_Enabled) {	
 		switch (MenuPos)
 		{
@@ -115,7 +121,9 @@ void Menu::Execute()
 			break;
 
 		case 3:
-			readSetup();
+			Serial.println("Crash");
+			while(1)
+			 ; // do nothing until the watchdog timer kicks in and resets the program.
 			break;
 
 		case 5:

@@ -14,6 +14,8 @@
 #include "credentials.h"
 #include "NoIP.h"
 #include "Server.h"
+#include "ApplicationMonitor.h"
+
 
 class WebSvrClass;
 class Menu;
@@ -26,7 +28,7 @@ class NoIPUpdater;
 class WebServer;
 class HConfig;
 
-
+class CApplicationMonitor;
 
 // arduino inputs used for OneWire
 #define SummerTime				4 // 0 = Normal time
@@ -74,7 +76,6 @@ extern OneWire ds2;
 extern LiquidTWI2 lcd;
 extern UIPClient client;
 
-
 extern Menu menu;
 extern Clock clock;
 extern Power power;
@@ -83,6 +84,8 @@ extern SendData sendData;
 extern SendAlarm sendAlarm;
 extern NoIPUpdater NoIP;
 extern WebSvrClass WebSvr;
+
+extern CApplicationMonitor ApplicationMonitor;
 
 
 #endif

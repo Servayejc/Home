@@ -3,12 +3,18 @@
 #include <MemoryFree.h>
 #include <UIPEthernet.h>
 #include <OneWire.h>
+#include <avr/wdt.h>
 #include "Globals.h"
 #include "Utils.h"
 
 
 //OneWire ds(OneWireReadAddress);
 //OneWire ds2(OneWireNetwork);
+
+void WDTReset() {
+	wdt_reset();	
+}
+
 
 bool ethernetConnect()
 {

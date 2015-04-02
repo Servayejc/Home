@@ -1,5 +1,5 @@
 #include "Globals.h"
-
+float memtest[4000];
 // Internet
 byte mac[] = {0x90, 0xA2, 0xDA, 0x0D, 0x48, 0x99};
 bool EthernetConnected = false;
@@ -82,7 +82,7 @@ const byte    Sensors[SensorsCount][8] =
 	SendAlarm	sendAlarm(15000);
 	NoIPUpdater NoIP(600000);
 	WebServer	webServer(200);
-	
-
+    
+   CApplicationMonitor ApplicationMonitor;
 
 

@@ -43,5 +43,6 @@ void Regulation::run(uint32_t now)
 	else digitalWrite(RelayPin,LOW);*/
 	
 	incRunTime(rate);
+	WDTReset();
 }
 

@@ -217,6 +217,7 @@ void Clock::run(uint32_t now)
 		Ethernet.maintain();
 	}
 	incRunTime(rate);
+	WDTReset();
 }
 
 // NTP Servers:

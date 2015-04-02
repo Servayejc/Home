@@ -108,6 +108,7 @@ void ReadTemp::run(uint32_t now)
 	//Serial.print("t");
 	incRunTime(rate);
 	//Serial.println(micros()-x);
+	WDTReset();
 }
 
 void ReadTemp::getAddress() {

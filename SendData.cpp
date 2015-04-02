@@ -85,6 +85,7 @@ void SendData::run(uint32_t now)
 		Data = "";
 		menu.LCDSetStatus(" ");
 		incRunTime(rate);
+		WDTReset();
 	}
 }
 

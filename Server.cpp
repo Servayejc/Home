@@ -353,4 +353,5 @@ void WebServer::run(uint32_t now) {
 	wdt_reset();
 	Ethernet.maintain();
 	incRunTime(rate);
+	WDTReset();
 }

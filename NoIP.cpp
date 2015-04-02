@@ -147,5 +147,6 @@ void NoIPUpdater::run(uint32_t now) {
 		UpdateIP();
 	}  
 	incRunTime(rate);
+	WDTReset();
 }
 

@@ -1,9 +1,5 @@
-//#include <EEPROMVar.h>
 #include <EEPROMex.h>
 #include <HttpClient.h>
-#include <b64.h>
-
-//#include "WebServer.h"
 #include "NoIP.h"
 #include "Credentials.h"
 #include "Globals.h"
@@ -29,17 +25,19 @@
 #include "NoIP.h"
 #include "Server.h"
 #include "HConfig.h"
+#include "ApplicationMonitor.h"
 #include <PID_v1.h>
 
 
 void setup() {
 	Serial.begin(115200);
+	
 	ethernetConnect();
 	pinMode(14, OUTPUT);
 	Config.loadFromEEPROM();
-	//setDefaultConfig();
-	//EEPROM.writeBlock<_config>(0, config);
-	//EEPROM.readBlock<_config>(0, config);
+	ApplicationMonitor.Dump(Serial);
+	ApplicationMonitor.EnableWatchdog(WDTO_8S);
+ 
 }
 
 // Main program.
@@ -68,11 +66,11 @@ void loop() {
 	ArduinoServer.setRunnable();
 
 	//set the watchdog to 8 second
-	wdt_enable(WDTO_8S);
+	//wdt_enable(WDTO_8S);
 	Serial.println("Watchdog enabled.");
 
 	// Initialize the scheduler.
-	Task *tasks[] = {/* &clock,*/ &ArduinoServer/* , &sendData, &sendAlarm,  &readT, &power, &menu, &NoIP*/ };
+	Task *tasks[] = {&clock, &ArduinoServer , &sendData, &sendAlarm,  &readT, &power, &menu, &NoIP };
 	TaskScheduler sched(tasks, NUM_TASKS(tasks));
 
 	// Run the scheduler - never returns.
