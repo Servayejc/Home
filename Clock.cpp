@@ -8,6 +8,8 @@
 #include "Globals.h"
 #include "Credentials.h"
 
+
+
 typedef unsigned long time_t;
 
 RTC_DS1307 RTC;
@@ -69,13 +71,18 @@ void Clock::init()
 		Ala += TE.Second;
 		Ala += "sec.";
 		sendAlarm.addAlarm(Ala);
-		Serial.println(Ala);
+		#ifdef DEBUG_CLOCK
+			Serial.println(Ala);
+		#endif	
 	}
 	NTPUpdate();
     // Read RTC Day register
 	byte data[1];
 	RTC.readBytesInRam(4, 1, data);
 	Day = data[0];
+	#ifdef DEBUG_MONITOR
+		ApplicationMonitor.Dump(Serial);
+	#endif	
 }
 
 void  Clock::NTPUpdate() {	
@@ -85,13 +92,17 @@ void  Clock::NTPUpdate() {
 		if (NP !=0) { 
 			tmElements_t TE;
 			breakTime(NP, TE, 1970);
-			Serial.println("NTP OK");
+			#ifdef DEBUG_CLOCK
+				Serial.println("NTP OK");
+			#endif	
 			sendAlarm.addAlarm("RTC Updated");
 			RTC.adjust(DateTime(TE.Year,TE.Month,TE.Day,TE.Hour,TE.Minute,TE.Second));
 		}
 		else {
 			sendAlarm.addAlarm("RTC Failed");
-			Serial.println("NTP Failed");
+			#ifdef DEBUG_CLOCK
+				Serial.println("NTP Failed");
+			#endif
 		}
 		menu.LCDSetStatus(" ");   
 	}
@@ -195,9 +206,20 @@ String Clock::GetDateTimeString() {
 	return Temp;
 }
 
+void Clock::readBytesInRam(uint8_t address, uint8_t length, uint8_t* p_data){
+	RTC.readBytesInRam(address, length, p_data);
+	}
+	
+void Clock::writeBytesInRam(uint8_t address, uint8_t length, uint8_t* p_data){
+	RTC.writeBytesInRam(address, length, p_data);
+}
+	
+
 
 void Clock::run(uint32_t now)
 {
+
+	
 	// Read RTC Day register
 	byte data[1];
 	RTC.readBytesInRam(4, 1, data);
@@ -206,7 +228,9 @@ void Clock::run(uint32_t now)
 	  Day = data[0];
 	  NTPUpdate();
 	}
-	Serial.print('.');
+	#ifdef DEBUG_CLOCK
+		Serial.print('.');
+	#endif
 	menu.setLed(ClockLed);
 	menu.BlinkLed14();
 	// save current time in RTC memory
@@ -286,7 +310,9 @@ time_t Clock::getNtpTime()
 			return secsSince1900 - 2208988800UL + timeZone * 3600;
 		}
 	}
-	Serial.println("No NTP Response :-(");
+	#ifdef DEBUG_CLOCK
+		Serial.println("No NTP Response :-(");
+	#endif	
 	return 0; // return 0 if unable to get the time
 }
 

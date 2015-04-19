@@ -85,4 +85,3 @@ const byte    Sensors[SensorsCount][8] =
     
    CApplicationMonitor ApplicationMonitor;
 
-

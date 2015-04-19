@@ -5,9 +5,7 @@
 #include "Utils.h"
 #include <avr/wdt.h>
 
-extern float   Temperatures[5];			// ????
-extern byte    OnWireAddress[9];		// ????
-extern String  Time;					// ????
+
 
 Menu::Menu(uint32_t _rate) :
 TimedTask(millis()),
@@ -46,7 +44,9 @@ void Menu::InitHardware(){
 void Menu::init()
 {
 	IsInstalled();
-	Serial.println("Menu");
+	#ifdef DEBUG_MENU
+		Serial.println("Menu");
+	#endif	
 	if (LCD_Enabled) {
 		InitHardware();
 
@@ -75,8 +75,9 @@ void Menu::run(uint32_t now)
 		if (n != OldValue)
 		{
 			OldValue = n;
-            Serial.print(n);
-			
+            #ifdef DEBUG_MENU
+				Serial.print(n);
+			#endif
 			byte  OldMenuPos = MenuPos;
 			if (checkBit(n, 0)) MenuPos = MenuStruct[MenuPos][1];	// S
 			if (checkBit(n, 1)) MenuPos = MenuStruct[MenuPos][0];	// E
@@ -110,9 +111,11 @@ void Menu::ShowTemperature() {
 
 void Menu::Execute()
 {
+	#ifdef DEBUG_MENU
 		Serial.print('-');
 		Serial.print(MenuPos);
 		Serial.println('-');
+	#endif	
 	if (LCD_Enabled) {	
 		switch (MenuPos)
 		{
@@ -121,10 +124,12 @@ void Menu::Execute()
 			break;
 
 		case 3:
-			Serial.println("Crash");
-			while(1)
-			 ; // do nothing until the watchdog timer kicks in and resets the program.
-			break;
+			#ifdef DEBUG_ALARMS
+				Serial.println("Crash");
+				while(1)
+				 ; // do nothing until the watchdog timer kicks in and resets the program.
+				break;
+			#endif	
 
 		case 5:
 			readT.getAddress();
@@ -184,8 +189,6 @@ void Menu::LCDSetTime() {
 void Menu::LCDSetAlarm() {
 	if (LCD_Enabled) {
 		lcd.setCursor(0, 1);
-		//lcd.print(sendAlarm::AlarmText);
-		//fillLine(AlarmText.length());
 	}
 }
 
@@ -231,7 +234,9 @@ byte Menu::readSetup() {
 		Wire.endTransmission();
 		Wire.requestFrom(LedAddress, 1); // request one byte of data from MCP20317
 		byte inputs=Wire.read(); // store the incoming byte into "inputs"
-		Serial.println(inputs, BIN);
+		#ifdef DEBUG_MENU
+			Serial.println(inputs, BIN);
+		#endif	
 		//return inputs;
 	}
 	return 0;

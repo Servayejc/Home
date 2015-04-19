@@ -56,19 +56,25 @@ void NoIPUpdater::ProcessResponse(){
 }
 
 void NoIPUpdater::close() {
-	Serial.println();
-	Serial.println("Client disconnect");
+	#ifdef DEBUG_NOIP
+		Serial.println();
+		Serial.println("Client disconnect");
+	#endif
 	client.stop();
 	current_line_is_blank = false;
 	done = true;
 }
 
 void NoIPUpdater::GetExternalIP() {
-	Serial.println("GetExtIP-Client connect");
+	#ifdef DEBUG_NOIP
+		Serial.println("GetExtIP-Client connect");
+	#endif	
 	if (client.connect("myip.dnsdynamic.org",80))
 	{
 	    next = millis() + 2000;    // 2 seconds
-		Serial.println("GetExtIP-Client connected");
+		#ifdef DEBUG_NOIP
+			Serial.println("GetExtIP-Client connected");
+		#endif	
 		client.println("GET / HTTP/1.1");
 		client.println("Host: myip.dnsdynamic.org");
 		client.println();
@@ -78,23 +84,31 @@ void NoIPUpdater::GetExternalIP() {
 			close();  // after 2 sec timeout
 		}
 		ProcessResponse();
-		Serial.print("GetExtIP-");
-		Serial.println(ExternalIP);
+		#ifdef DEBUG_NOIP
+			Serial.print("GetExtIP-");
+			Serial.println(ExternalIP);
+		#endif	
 		close();
 	}
-	else
-  		Serial.println("GetExtIP-Connect failed");
+	#ifdef DEBUG_NOIP
+		else
+  			Serial.println("GetExtIP-Connect failed");
+	#endif	
 }
 
 void NoIPUpdater::UpdateIP() {
 	done = false;
 	next = 0;
 	menu.setLed(NoIPLed);
-	Serial.println("NoIP connecting");
+	#ifdef DEBUG_NOIP
+		Serial.println("NoIP connecting");
+	#endif	
 	if (ethernetConnect()) {
 		// if you get a connection, report back via serial:
 		if (client.connect("dynupdate.no-ip.com", 80)) {
-			Serial.println("connected");
+			#ifdef DEBUG_NOIP
+				Serial.println("connected");
+			#endif	
 			next = millis() + 2000;    // 2 seconds
 			// Make a HTTP request:
 			//replace yourhost.no-ip.org with your no-ip hostname
@@ -119,7 +133,9 @@ void NoIPUpdater::UpdateIP() {
 					close();
 				}
 				int size;
-				Serial.print(size);
+				#ifdef DEBUG_NOIP
+					Serial.print(size);
+				#endif
 				while((size = client.available()) > 0)
 				{
 					Ethernet.maintain();
@@ -129,7 +145,9 @@ void NoIPUpdater::UpdateIP() {
 					}
 					if (dataFound) {
 						if (c > ' ' ){
-							Serial.print(c);
+							#ifdef DEBUG_NOIP
+								Serial.print(c);
+							#endif	
 						}
 					}
 				}
@@ -141,8 +159,10 @@ void NoIPUpdater::UpdateIP() {
 
 void NoIPUpdater::run(uint32_t now) {
 	GetExternalIP();
-	Serial.println(ExternalIP);
-	Serial.println(CurrentIP);
+	#ifdef DEBUG_NOIP
+		Serial.println(ExternalIP);
+		Serial.println(CurrentIP);
+	#endif	
 	if (CurrentIP != ExternalIP) {
 		UpdateIP();
 	}  

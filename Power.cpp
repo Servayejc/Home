@@ -12,7 +12,9 @@ TimedTask(millis()),
 
 void  Power::init(){
 	for (int i = 0; i < 8; i++){
-		Serial.print(i);
+		#ifdef DEBUG_POWER
+			Serial.print(i);
+		#endif
 		time[i] = 0;
 		Energy[i] = 0;
 	}

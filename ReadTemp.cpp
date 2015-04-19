@@ -45,8 +45,9 @@ float ReadTemp::readOneTemp(byte Ndx)
 	for (byte i = 0; i < 9; i++)
 	{                                      // we need 9 bytes
 		data[i] = ds.read();
-
-		//Serial.print(data[i], HEX);
+		#ifdef DEBUG_READTEMP
+			Serial.print(data[i], HEX);
+		#endif	
 	}
 
 	// convert the data to actual temperature
@@ -63,7 +64,9 @@ String ReadTemp::GetData() {
 	String Data = "\n";
 	if (Mode)
 	{
-		Serial.println("Test");
+		#ifdef DEBUG_READTEMP
+			Serial.println("Test");
+		#endif
 		for (byte i = 0; i < 2; i++)
 		{
 			Data += String(990+i);
@@ -76,7 +79,9 @@ String ReadTemp::GetData() {
 	}
 	else
 	{
-		Serial.println("Production");
+		#ifdef DEBUG_READTEMP
+			Serial.println("Production");
+		#endif	
 		for (byte i = 0; i < SensorsCount; i++)
 		{
 			Data += String(i);
@@ -105,9 +110,13 @@ void ReadTemp::run(uint32_t now)
 
 	// prepare next measurement
 	startConversion();
-	//Serial.print("t");
+	#ifdef DEBUG_READTEMP
+		Serial.print("t");
+	#endif	
 	incRunTime(rate);
-	//Serial.println(micros()-x);
+	#ifdef DEBUG_READTEMP
+		Serial.println(micros());
+	#endif	
 	WDTReset();
 }
 
@@ -118,7 +127,9 @@ void ReadTemp::getAddress() {
 	for (int i = 0; i < 8; i++)
 	{  // we need 9 bytes
 		OnWireAddress[i] = ds2.read();
-		Serial.print(OnWireAddress[i], HEX);
+		#ifdef DEBUG_GETADDRESS 
+			Serial.print(OnWireAddress[i], HEX);
+		#endif	
 		Serial.print(" ");
 	}
 	Serial.println();

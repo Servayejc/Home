@@ -1,0 +1,54 @@
+Client disconnect
+...alarms
+..10..16-3-
+Crash
+Application Monitor
+-------------------
+Saved reports: 2
+Next report: 2
+0: word-address=0x138B: byte-address=0x2716, data=0x0
+1: word-address=0x138B: byte-address=0x2716, data=0x0
+
+
+    2700:	9d e0       	ldi	r25, 0x0D	; 13
+    2702:	b8 01       	movw	r22, r16
+    2704:	0e 94 63 10 	call	0x20c6	; 0x20c6 <_ZN9SendAlarm8addAlarmE6String>
+    2708:	43 c0       	rjmp	.+134    	; 0x2790 <_ZN4Menu7ExecuteEv+0x11a>
+E:\TempuinoCode\Home-V2\Home\Menu.cpp(124)
+			break;
+
+		case 3:
+			Serial.println("Crash");
+    270a:	8e ec       	ldi	r24, 0xCE	; 206
+    270c:	93 e1       	ldi	r25, 0x13	; 19
+    270e:	6b e0       	ldi	r22, 0x0B	; 11
+    2710:	73 e0       	ldi	r23, 0x03	; 3
+    2712:	0e 94 78 73 	call	0xe6f0	; 0xe6f0 <_ZN5Print7printlnEPKc>
+    2716:	ff cf       	rjmp	.-2      	; 0x2716 <_ZN4Menu7ExecuteEv+0xa0>
+E:\TempuinoCode\Home-V2\Home\Menu.cpp(130)
+			while(1)
+			 ; // do nothing until the watchdog timer kicks in and resets the program.
+			break;
+
+		case 5:
+			readT.getAddress();
+    2718:	8f e8       	ldi	r24, 0x8F	; 143
+    271a:	9d e0       	ldi	r25, 0x0D	; 13
+    271c:	0e 94 7b 18 	call	0x30f6	; 0x30f6 <_ZN8ReadTemp10getAddressEv>
+	
+	
+			case 3:
+			Serial.println("Crash");
+			while(1)
+			 ; // do nothing until the watchdog timer kicks in and resets the program.
+			break;
+
+
+- 1-wire Temperature logging
+- 1-wire Power logging 
+- Real Time Clock with NTP 
+- E-Mail Alarms
+- Data logged in IOT
+- Temperature regulation with web interface
+- I2C user menu and display
+- web server 

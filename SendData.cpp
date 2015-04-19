@@ -3,6 +3,9 @@
 #include "Utils.h"
 #include "Globals.h"
 
+
+
+
 volatile boolean  Connected;
 
 SendData::SendData(uint32_t _rate) :
@@ -24,49 +27,64 @@ bool SendData::canRun(uint32_t now)
 
 void SendData::SendToXyvely(String Data, bool IsAlarm){
 	IPAddress server(216, 52, 233, 121); //Xively
-	Serial.println("connecting...");
+	#ifdef DEBUG_SENDDATA
+		Serial.println("connecting...");
+	#endif	
 	if (client.connect(server, 80))
 	{
 		client.print("PUT /v2/feeds/");
 		if (IsAlarm == true) {
 			client.print(ALARM_FEED);
-			//Serial.println(ALARM_FEED);
+			#ifdef DEBUG_SENDDATA
+				Serial.println(ALARM_FEED);
+			#endif	
 		}
 		else {
 			client.print(FEED);
-			//Serial.println(FEED);
+			#ifdef DEBUG_SENDDATA
+				Serial.println(FEED);
+			#endif
 		}
 		client.println(".csv HTTP/1.1");
 		client.println("Host: api.pachube.com");
 		client.print("X-pachubeApiKey: ");
 		if (IsAlarm == true) {
 			client.println(ALARM_APIKEY);
-			//Serial.println(ALARM_APIKEY);
+			#ifdef DEBUG_SENDDATA
+				Serial.println(ALARM_APIKEY);
+			#endif	
 		}
 		else {
 			client.println(APIKEY);
-			//Serial.println(APIKEY);
+			#ifdef DEBUG_SENDDATA
+				Serial.println(APIKEY);
+			#endif  
 		}
 		client.print("User-Agent: ");
 		client.println(USERAGENT);
 		client.print("Content-Length: ");
 		client.println(Data.length());
-		Serial.print("===");
-		Serial.print(Data);
-		Serial.println("===");
+		#ifdef DEBUG_SENDDATA
+			Serial.print("===");
+			Serial.print(Data);
+			Serial.println("===");
+			Serial.println("send ok");
+		#endif
 		// last pieces of the HTTP PUT request:
 		client.println("Content-Type: text/csv");
 		client.println("Connection: close");
 
 		// here's the actual content of the PUT request:
 		client.println(Data);
-		Serial.println("send ok");
+		
 	}
 	else
 	{
 		// if you couldn't make a connection:
-		Serial.println("connection failed");
-		Serial.println("disconnecting.");
+		#ifdef DEBUG_SENDDATA
+			Serial.println("connection failed");
+			Serial.println("disconnecting.");
+		#endif
 		client.stop();
 	}
 }
@@ -77,10 +95,11 @@ void SendData::run(uint32_t now)
 		String Data = readT.GetData();
 		menu.setLed(SendDataLed);
 		menu.LCDSetStatus("Sending data");
-		
-		Serial.println("Send data");
-		
-		//Serial.println(Data);
+		#ifdef DEBUG_SENDDATA
+			Serial.println("Send data");
+			Serial.println(Data);
+		#endif
+	
 		SendToXyvely(Data, false);
 		Data = "";
 		menu.LCDSetStatus(" ");

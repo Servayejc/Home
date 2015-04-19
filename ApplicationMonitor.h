@@ -11,11 +11,12 @@
 
 #include <Arduino.h>
 #include <avr/wdt.h>
-
+#include "Globals.h"
 
 
 
 #define PROGRAM_COUNTER_SIZE 2 /* bytes*/
+
 
   struct CApplicationMonitorHeader
   {

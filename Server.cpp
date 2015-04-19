@@ -24,8 +24,10 @@ on(false)
 
 void WebServer::init() {
 	ethernetConnect();
-	Serial.print("server is at ");
-	Serial.println(Ethernet.localIP());
+	#ifdef DEBUG_SERVER
+		Serial.print("server is at ");
+		Serial.println(Ethernet.localIP());
+	#endif	
 	server.begin();
 	//load_config();
 }
@@ -275,30 +277,40 @@ void WebServer::ProcessReceivedLine(String line) {
 	}
 	// when client ask params
 	if (line.indexOf("POST /PARAMS") == 0) {
-		Serial.println("POST /PARAMS");
+		#ifdef DEBUG_SERVER
+			Serial.println("POST /PARAMS");
+		#endif	
 		page = PARAMS;
 	}
 	// when client ask edit
 	if (line.indexOf("POST /EDIT") == 0) {
-		Serial.println("POST /EDIT");
+		#ifdef DEBUG_SERVER
+			Serial.println("POST /EDIT");
+		#endif	
 		page = EDIT;
 	}
 	// when the client ask to save
 	if (line.indexOf("POST /SAVE") == 0) {
 		//		EEPROM_writeConf();
-		Serial.println("POST /SAVE");
+		#ifdef DEBUG_SERVER
+			Serial.println("POST /SAVE");
+		#endif	
 		page = SAVE;
 	}
 		// when the client ask to save
 	if (line.indexOf("POST /DEFAULT") == 0) {
 		//		EEPROM_writeConf();
-		Serial.println("POST /DEFAULT");
+		#ifdef DEBUG_SERVER
+			Serial.println("POST /DEFAULT");
+		#endif	
 		page = DEFAULT;
 	}
 
 	// when client ask the page
 	if (line.indexOf("GET / ") == 0) {
-		Serial.println("GET / ");
+		#ifdef DEBUG_SERVER
+			Serial.println("GET / ");
+		#endif	
 		page = DEFAULT;
 	}
 	
@@ -344,11 +356,15 @@ void WebServer::run(uint32_t now) {
 	client = server.available();
 	if (client) {
 		menu.setLed(ServerLed);
-		Serial.println("Client");
+		#ifdef DEBUG_SERVER
+			Serial.println("Client connected");
+		#endif	
 		readContent();
 		executeCommand();
 		client.stop();
-		Serial.println("client disconnected");
+		#ifdef DEBUG_SERVER
+			Serial.println("Client disconnected");
+		#endif	
 	}
 	wdt_reset();
 	Ethernet.maintain();

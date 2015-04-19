@@ -5,6 +5,8 @@
 #include <LiquidTWI2.h>
 #include <UIPEthernet.h>
 #include <OneWire.h>
+
+
 #include "Clock.h"
 #include "Menu.h"
 #include "ReadTemp.h"
@@ -15,6 +17,7 @@
 #include "NoIP.h"
 #include "Server.h"
 #include "ApplicationMonitor.h"
+
 
 
 class WebSvrClass;
@@ -86,6 +89,7 @@ extern NoIPUpdater NoIP;
 extern WebSvrClass WebSvr;
 
 extern CApplicationMonitor ApplicationMonitor;
+
 
 
 #endif

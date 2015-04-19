@@ -8,6 +8,8 @@
 #include "Globals.h"
 #include "Credentials.h"
 
+
+
 UIPClient      sendMailClient;
 
 SendAlarm::SendAlarm(uint32_t _rate) :
@@ -65,20 +67,28 @@ String SendAlarm::GetEvents()
 	
 void SendAlarm::run(uint32_t now)
 {
-	Serial.println("alarms");
+	#ifdef DEBUG_ALARMS
+		Serial.println("alarms");
+	#endif
+	
 	AlarmText.trim();
 	if (AlarmText.length() > 0)
 	{
 		menu.setLed(SendAlarmsLed);
-		Serial.print("-");
-		Serial.print(AlarmText);
-		Serial.println("-");
+		#ifdef DEBUG_ALARMS
+			Serial.print("-");
+			Serial.print(AlarmText);
+			Serial.println("-");
+		#endif
 		// send to Xively
 		logToXively();
 		
 		// send email
 		menu.LCDSetStatus("Sending Alarm");
-		Serial.println("Sending alarm.");
+		#ifdef DEBUG_ALARMS
+			Serial.println("Sending alarm.");
+		#endif
+		
 		TembooChoreo   SendEmailChoreo(sendMailClient);
 
 		// Set Temboo account credentials
@@ -97,10 +107,11 @@ void SendAlarm::run(uint32_t now)
 		unsigned int   returnCode = SendEmailChoreo.run();
 
 		// A return code of zero means everything worked
-		//Serial.println(returnCode);
 		if (returnCode == 0)
 		{
-			Serial.println("Done!\n");
+			#ifdef DEBUG_ALARMS
+				Serial.println("Done!\n");
+			#endif
 			AlarmText = "";
 		}
 		else
@@ -110,15 +121,21 @@ void SendAlarm::run(uint32_t now)
 			while (SendEmailChoreo.available())
 			{
 				char  c = SendEmailChoreo.read();
-				Serial.print(c);
+				#ifdef DEBUG_ALARMS
+					Serial.print(c);
+				#endif
 			}
-
-			Serial.println();
-			incRunTime(5000); //  error, wait 5 sec;
+			#ifdef DEBUG_ALARMS
+				Serial.println();
+				Serial.println("Wait 15 sec before retry! \n");
+			#endif
+			incRunTime(15000); //  error, wait 15 sec;
 		}
 
 		SendEmailChoreo.close();
-		showMemory();
+		#ifdef DEBUG_ALARMS
+			showMemory();
+		#endif
 		menu.LCDSetStatus(" ");
 	}
 	

@@ -1,7 +1,9 @@
 #include <avr/eeprom.h>
 #include "ApplicationMonitor.h"
-#include "Globals.h"
+#include "Clock.h"
+#include "Utils.h"
 
+#define DEBUG_MONITOR
 /*
 Function called when the watchdog interrupt fires. The function is naked so that
 we don't get program stated pushed onto the stack. Consequently the top two
@@ -9,10 +11,13 @@ values on the stack will be the program counter when the interrupt fired. We're
 going to save that in the eeprom then let the second watchdog event reset the
 micro. We never return from this function. 
 */
+
+
 ISR(WDT_vect, ISR_NAKED)
 {
   // Setup a pointer to the program counter. It goes in a register so we
   // don't mess up the stack. 
+  ApplicationMonitor.SetData(uint32_t (getFreeMem));
   register uint8_t *upStack;
 
   upStack = (uint8_t*)SP;
@@ -36,7 +41,7 @@ nMaxEntries * sizeof(CCrashReport) bytes in the eeprom.
 CApplicationMonitor::CApplicationMonitor(int nBaseAddress, int nMaxEntries)
   : c_nBaseAddress(nBaseAddress), c_nMaxEntries(nMaxEntries)
 {
-  m_CrashReport.m_uData = 0;
+  m_CrashReport.m_uData = 44;
 }
 
 /* 
@@ -66,31 +71,51 @@ void CApplicationMonitor::IAmAlive() const
 
 void CApplicationMonitor::Dump(Print &rDestination, bool bOnlyIfPresent) const
 {
+   
   CApplicationMonitorHeader Header;
   CCrashReport Report;
   uint8_t uReport;
+  
   uint32_t uAddress;
+  String Ala("");
 
   LoadHeader(Header);
   if (!bOnlyIfPresent || Header.m_uSavedReports != 0)
   {
     rDestination.println(F("Application Monitor"));
-    rDestination.println(F("-------------------"));
+    Ala += "Crash WDT\n";
+	rDestination.println(F("-------------------"));
     PrintValue(rDestination, F("Saved reports: "), Header.m_uSavedReports, DEC, true);
     PrintValue(rDestination, F("Next report: "), Header.m_uNextReport, DEC, true);
-
+    Ala += ("Saved reports: "); 
+	Ala += Header.m_uSavedReports;
+	Ala += ("\nNext report: ");
+	Ala += Header.m_uNextReport;
+	
+	
+	
     for (uReport = 0; uReport < Header.m_uSavedReports; ++uReport)
     {
-      LoadReport(uReport, Report);
-
+      int currentReport = Header.m_uNextReport - 1;
+	  if (currentReport == -1) currentReport = 9;
+	       
+	  LoadReport(uReport, Report);
       rDestination.print(uReport);
+	  Ala += "\n";
+	  Ala += uReport;
       uAddress = 0;
       memcpy(&uAddress, Report.m_auAddress, PROGRAM_COUNTER_SIZE);
-      PrintValue(rDestination, F(": PC=0x"), uAddress, HEX, false);
-      PrintValue(rDestination, F(": ADD=0x"), uAddress * 2, HEX, false);
-      PrintValue(rDestination, F(", data=0x"), Report.m_uData, HEX, true);
+      Ala += ": PC=0x";     
+	  Ala += String(uAddress*2, HEX);
+	  Ala += "  FreeMem=0x";
+	  Ala += String(Report.m_uData, DEC);
+	  if (currentReport == uReport) Ala += "<---";
+	  PrintValue(rDestination, F(": PC=0x"), uAddress, HEX, false);
+	  PrintValue(rDestination, F(": ADD=0x"), uAddress * 2, HEX, false);
+      PrintValue(rDestination, F(", data=0x"), Report.m_uData, DEC, true);
     }
   }
+  sendAlarm.addAlarm(Ala);
 }
 
 void CApplicationMonitor::PrintValue(Print &rDestination, const __FlashStringHelper *pLabel, 
@@ -98,14 +123,14 @@ void CApplicationMonitor::PrintValue(Print &rDestination, const __FlashStringHel
 {
   rDestination.print(pLabel);
   rDestination.print(uValue, uRadix);
-  if (bNewLine)
+  if (bNewLine){
     rDestination.println();
+	}
 }
 
 void CApplicationMonitor::WatchdogInterruptHandler(uint8_t *puProgramAddress)
 {
   CApplicationMonitorHeader Header;
-
   LoadHeader(Header);
   memcpy(m_CrashReport.m_auAddress, puProgramAddress, PROGRAM_COUNTER_SIZE);
   SaveCurrentReport(Header.m_uNextReport);
@@ -149,7 +174,7 @@ void CApplicationMonitor::SaveHeader(const CApplicationMonitorHeader &rReportHea
 void CApplicationMonitor::SaveCurrentReport(int nReportSlot) const
 {
   WriteBlock(GetAddressForReport(nReportSlot), &m_CrashReport, sizeof(m_CrashReport));
-}
+ }
 
 void CApplicationMonitor::LoadReport(int nReport, CCrashReport &rState) const
 {

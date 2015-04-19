@@ -50,6 +50,10 @@ void showMemory()
 	Serial.println(" of 16384");
 };
 
+int getFreeMem(){
+	return freeMemory(); 
+}
+
 String FormatTemp(float V)
 {
 	int      FirstPart = (int) V / 100;

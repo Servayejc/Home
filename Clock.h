@@ -34,7 +34,8 @@ public:
 	String	GetTimeString();
 	String	GetDateString();
 	String	GetDateTimeString();
-
+    void readBytesInRam(uint8_t address, uint8_t length, uint8_t* p_data);
+	void writeBytesInRam(uint8_t address, uint8_t length, uint8_t* p_data);
 private:
 	void     sendNTPpacket(IPAddress &address);
 	time_t   getNtpTime();

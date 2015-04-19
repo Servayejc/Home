@@ -29,15 +29,16 @@
 #include <PID_v1.h>
 
 
+
+
 void setup() {
 	Serial.begin(115200);
 	
 	ethernetConnect();
 	pinMode(14, OUTPUT);
 	Config.loadFromEEPROM();
-	ApplicationMonitor.Dump(Serial);
+	
 	ApplicationMonitor.EnableWatchdog(WDTO_8S);
- 
 }
 
 // Main program.
@@ -67,8 +68,9 @@ void loop() {
 
 	//set the watchdog to 8 second
 	//wdt_enable(WDTO_8S);
-	Serial.println("Watchdog enabled.");
-
+	#ifdef DEBUG_WDT
+		Serial.println("Watchdog enabled.");
+	#endif
 	// Initialize the scheduler.
 	Task *tasks[] = {&clock, &ArduinoServer , &sendData, &sendAlarm,  &readT, &power, &menu, &NoIP };
 	TaskScheduler sched(tasks, NUM_TASKS(tasks));
